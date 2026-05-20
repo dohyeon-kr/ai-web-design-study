@@ -1,0 +1,19 @@
+.card {
+  background: var(--surface-card-social);
+  border-radius: var(--radius-card-sm);
+  padding: var(--space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.iconButton {
+  flex: 1;
+  aspect-ratio: 1;
+  border-radius: var(--radius-circle);
+  background: var(--surface-icon-on-pink);
+  color: #c45fa2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

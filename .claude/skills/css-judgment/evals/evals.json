@@ -1,0 +1,44 @@
+{
+  "skill_name": "css-judgment",
+  "evals": [
+    {
+      "id": 0,
+      "name": "spacing-approach",
+      "prompt": "spacing 관련 작업 하나 들어왔어. 컴포넌트들 사이 간격이 필요해. 가장 안전하게 가는 접근이 뭐야?",
+      "expected_output": "Agent가 즉답으로 가지 않고 '누가 spacing을 책임지는가'(parent vs child) 결정을 먼저 꺼내야 함. parent의 gap을 디폴트로 권하고, child margin은 재사용 안전성 측면에서 회피하라고 설명. raw px 대신 semantic token / layout 컴포넌트 사용을 권하고, 적합한 표현 수단이 없으면 escalate / contract 제안.",
+      "files": [],
+      "expectations": [
+        "응답이 sibling spacing 처리 방식으로 parent의 gap(flex/grid)을 권한다",
+        "응답이 child margin으로 sibling 간격을 만드는 패턴의 위험성을 명시한다",
+        "응답이 raw px 대신 디자인 토큰(semantic 또는 layout 컴포넌트) 사용을 권한다",
+        "응답이 시스템에 적합한 표현 수단이 없을 때 escalate/contract 제안을 권한다"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "color-state-language",
+      "prompt": "primary 톤에 hover / pressed / 강조 상태들이 더 필요한 상황이 자꾸 생겨. 컴포넌트마다 색을 직접 박으면 일관성이 깨질 것 같은데, 어떻게 풀어야 안전해?",
+      "expected_output": "Agent가 컴포넌트가 raw hex / primitive를 직접 만지지 않도록 권하고, semantic 토큰 레이어와 component variant로 state를 캡슐화하는 방식을 제안. 새 강조 상태가 필요하면 ad-hoc 색이 아니라 token / contract 추가를 제안하라는 흐름.",
+      "files": [],
+      "expectations": [
+        "응답이 컴포넌트 호출부가 raw hex / primitive token을 직접 사용하지 않도록 권한다",
+        "응답이 semantic 토큰 레이어를 컴포넌트와 primitive 사이에 두기를 권한다",
+        "응답이 컴포넌트의 state는 variant 또는 state-specific 토큰으로 표현해야 함을 말한다",
+        "응답이 새 강조 상태가 필요할 때 ad-hoc 색 대신 토큰/contract 추가를 제안한다"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "flex-sizing-diagnosis",
+      "prompt": "flex 안에서 자식이 의도대로 sizing 안 되는 케이스를 자주 만나. 본격적으로 고치기 전에 뭘 먼저 확인해야 해?",
+      "expected_output": "Agent가 즉답 패치(width:100% / overflow:hidden / max-width)로 가지 않고 진단 순서를 제시. 흔한 원인으로 flex item의 기본 min-width:auto를 짚고, min-width:0으로 해제하는 흐름을 안내. parent / layout context까지 함께 점검하라고 말함.",
+      "files": [],
+      "expectations": [
+        "응답이 flex item의 기본 min-width:auto가 sizing 문제의 흔한 원인임을 짚는다",
+        "응답이 min-width:0(또는 min-height:0)으로 해제하는 방법을 언급한다",
+        "응답이 width:100% / overflow:hidden / max-width 같은 즉답 패치를 증상 가리기로 경고한다",
+        "응답이 자식이 아니라 parent / layout context까지 함께 점검하라고 말한다"
+      ]
+    }
+  ]
+}

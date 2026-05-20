@@ -1,0 +1,11 @@
+{
+  "eval_id": 1,
+  "eval_name": "color-state-language",
+  "prompt": "primary 톤에 hover / pressed / 강조 상태들이 더 필요한 상황이 자꾸 생겨. 컴포넌트마다 색을 직접 박으면 일관성이 깨질 것 같은데, 어떻게 풀어야 안전해?",
+  "assertions": [
+    "응답이 컴포넌트 호출부가 raw hex / primitive token을 직접 사용하지 않도록 권한다",
+    "응답이 semantic 토큰 레이어를 컴포넌트와 primitive 사이에 두기를 권한다",
+    "응답이 컴포넌트의 state는 variant 또는 state-specific 토큰으로 표현해야 함을 말한다",
+    "응답이 새 강조 상태가 필요할 때 ad-hoc 색 대신 토큰/contract 추가를 제안한다"
+  ]
+}

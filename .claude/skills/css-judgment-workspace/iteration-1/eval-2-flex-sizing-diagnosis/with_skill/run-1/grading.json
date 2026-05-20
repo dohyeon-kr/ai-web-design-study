@@ -1,0 +1,25 @@
+{
+  "expectations": [
+    {
+      "text": "응답이 flex item의 기본 min-width:auto가 sizing 문제의 흔한 원인임을 짚는다",
+      "passed": true,
+      "evidence": "L11: 'min-width: auto 기본값이 줄어듦을 막고 있을 가능성 매우 높음. 이게 flex sizing 이슈의 1위 원인'"
+    },
+    {
+      "text": "응답이 min-width:0(또는 min-height:0)으로 해제하는 방법을 언급한다",
+      "passed": false,
+      "evidence": "원인이 min-width: auto임은 명시했고 '원인이 min-width: auto 면 1줄'이라고 암시했으나, 실제 해제 방법인 'min-width: 0'을 명시적으로 적지 않음. 보고 형태에서 진단이 강하고 처방이 약함."
+    },
+    {
+      "text": "응답이 width:100% / overflow:hidden / max-width 같은 즉답 패치를 증상 가리기로 경고한다",
+      "passed": true,
+      "evidence": "L3: '증상에 width: 100%나 flex-shrink를 던지기 전에' / L28: '진단 없이 width: 100%로 덮는 건 증상 패치고, 다음 사람이 그걸 패턴으로 오인함'"
+    },
+    {
+      "text": "응답이 자식이 아니라 parent / layout context까지 함께 점검하라고 말한다",
+      "passed": true,
+      "evidence": "L17: '부모: display, flex-direction, align-items, justify-content, gap, width / min-width / max-width' — parent 속성 명시적으로 점검 항목에 포함"
+    }
+  ],
+  "summary": {"passed": 3, "failed": 1, "total": 4, "pass_rate": 0.75}
+}

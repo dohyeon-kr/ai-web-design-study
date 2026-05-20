@@ -1,0 +1,112 @@
+.card {
+  border-radius: var(--radius-card-sm);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-width: 0;
+  height: 100%;
+}
+
+.tone_warm {
+  background: var(--surface-card-yoga);
+  color: var(--text-on-warm);
+}
+
+.tone_cool {
+  background: var(--surface-card-balance);
+  color: var(--text-on-cool);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex: 1;
+  min-width: 0;
+}
+
+.tag {
+  align-self: flex-start;
+  background: var(--surface-chip-warm);
+  color: var(--text-on-warm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-chip);
+  padding: var(--space-2xs) var(--space-sm);
+}
+
+.tone_cool .tag {
+  background: var(--surface-chip-cool);
+  color: var(--text-on-cool);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: inherit;
+}
+
+.meta {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--font-size-sm);
+  color: inherit;
+}
+
+.metaRow {
+  line-height: 1.4;
+}
+
+.balanceArt {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.balanceSvg {
+  width: 84px;
+  height: auto;
+}
+
+.trainer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding-top: var(--space-sm);
+}
+
+.trainerAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-circle);
+  flex-shrink: 0;
+}
+
+.trainerText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.trainerRole {
+  font-size: var(--font-size-xs);
+  color: inherit;
+  opacity: 0.75;
+  line-height: 1.2;
+}
+
+.trainerName {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,25 @@
+{
+  "expectations": [
+    {
+      "text": "응답이 컴포넌트 호출부가 raw hex / primitive token을 직접 사용하지 않도록 권한다",
+      "passed": true,
+      "evidence": "L22: '린트: 컴포넌트 파일에서 raw hex / rgb / primitive 토큰 직접 사용을 금지'"
+    },
+    {
+      "text": "응답이 semantic 토큰 레이어를 컴포넌트와 primitive 사이에 두기를 권한다",
+      "passed": true,
+      "evidence": "L7-10: 'Primitive (reference) tokens ... Semantic (alias) tokens ... 컴포넌트는 무조건 semantic만 참조하고, semantic은 primitive를 가리킵니다'"
+    },
+    {
+      "text": "응답이 컴포넌트의 state는 variant 또는 state-specific 토큰으로 표현해야 함을 말한다",
+      "passed": true,
+      "evidence": "L14: 'hover/pressed/focus/selected/emphasis는 각각 토큰으로 박제' — state별 token으로 캡슐화하는 흐름"
+    },
+    {
+      "text": "응답이 새 강조 상태가 필요할 때 ad-hoc 색 대신 토큰/contract 추가를 제안한다",
+      "passed": true,
+      "evidence": "L18: '새 상태가 필요하면 토큰부터 추가하고 그 다음 컴포넌트가 씁니다' / L24-26: '리뷰 체크리스트: 새 색 추가 PR은 토큰 정의 변경 없이는 머지 금지'"
+    }
+  ],
+  "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1.0}
+}

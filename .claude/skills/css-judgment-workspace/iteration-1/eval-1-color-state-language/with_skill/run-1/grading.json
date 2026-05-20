@@ -1,0 +1,25 @@
+{
+  "expectations": [
+    {
+      "text": "응답이 컴포넌트 호출부가 raw hex / primitive token을 직접 사용하지 않도록 권한다",
+      "passed": true,
+      "evidence": "L3: '호출부에서 색을 직접 만지는 순간 시스템은 졌다' / L11: 'variant 내부에서도 raw hex나 gray[473] 같은 primitive를 꺼내 쓰면 안 된다'"
+    },
+    {
+      "text": "응답이 semantic 토큰 레이어를 컴포넌트와 primitive 사이에 두기를 권한다",
+      "passed": true,
+      "evidence": "L11: '중간에 의도 단위의 의미 토큰이 있어야 한다 — 예컨대 action.primary.default / hover / pressed / focus 같은 상태별 semantic. 이 레이어가 있으면 primary 톤 전체를 한 군데서 흔들 수 있고'"
+    },
+    {
+      "text": "응답이 컴포넌트의 state는 variant 또는 state-specific 토큰으로 표현해야 함을 말한다",
+      "passed": true,
+      "evidence": "L7: '<Button variant=\"primary\" /> 하나로 hover/pressed/focus/disabled가 전부 정의돼 있고, 호출부는 primary가 필요하다는 의도만 선언'"
+    },
+    {
+      "text": "응답이 새 강조 상태가 필요할 때 ad-hoc 색 대신 토큰/contract 추가를 제안한다",
+      "passed": true,
+      "evidence": "L15: '이때 해야 할 일은 색 추가가 아니라 contract 제안이다 ... semantic을 하나 추가하자'"
+    }
+  ],
+  "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1.0}
+}

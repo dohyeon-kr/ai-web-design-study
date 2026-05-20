@@ -1,0 +1,45 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-circle);
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.greeting {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.greetingLine {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-strong);
+  line-height: var(--line-height-tight);
+}
+
+.dateLine {
+  font-size: var(--font-size-sm);
+  color: var(--text-default);
+  line-height: var(--line-height-snug);
+}
+
+.searchButton {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-circle);
+  border: 1px solid var(--border-icon-button);
+  color: var(--text-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}

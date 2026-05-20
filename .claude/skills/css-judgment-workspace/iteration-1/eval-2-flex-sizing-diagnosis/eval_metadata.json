@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "eval_name": "flex-sizing-diagnosis",
+  "prompt": "flex 안에서 자식이 의도대로 sizing 안 되는 케이스를 자주 만나. 본격적으로 고치기 전에 뭘 먼저 확인해야 해?",
+  "assertions": [
+    "응답이 flex item의 기본 min-width:auto가 sizing 문제의 흔한 원인임을 짚는다",
+    "응답이 min-width:0(또는 min-height:0)으로 해제하는 방법을 언급한다",
+    "응답이 width:100% / overflow:hidden / max-width 같은 즉답 패치를 증상 가리기로 경고한다",
+    "응답이 자식이 아니라 parent / layout context까지 함께 점검하라고 말한다"
+  ]
+}

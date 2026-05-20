@@ -1,0 +1,306 @@
+{
+  "metadata": {
+    "skill_name": "css-judgment",
+    "skill_path": "/Users/judohyeon/projects/study/.claude/skills/css-judgment",
+    "executor_model": "<model-name>",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-05-20T05:30:38Z",
+    "evals_run": [
+      0,
+      1,
+      2
+    ],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_id": 0,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 37.4,
+        "tokens": 51167,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "응답이 sibling spacing 처리 방식으로 parent의 gap(flex/grid)을 권한다",
+          "passed": true,
+          "evidence": "L10: 'parent에서 layout primitive(flex / grid)의 gap으로 표현합니다'"
+        },
+        {
+          "text": "응답이 child margin으로 sibling 간격을 만드는 패턴의 위험성을 명시한다",
+          "passed": true,
+          "evidence": "L8: '자식에 margin-bottom / margin-right을 박지 마세요. 그 자식이 다른 컨테이너에 들어가는 순간 외부 간격이 항상 어긋납니다 — :last-child 예외처리, 컨테이너별 override 같은 패치의 패치가 시작되는 지점'"
+        },
+        {
+          "text": "응답이 raw px 대신 디자인 토큰(semantic 또는 layout 컴포넌트) 사용을 권한다",
+          "passed": true,
+          "evidence": "L14-17: 'gap: 12px 같은 raw 값, 또는 spacing[3] 같은 primitive token을 매번 합성하는 것 둘 다 피합니다. ... <Stack gap=\"md\"> ... semantic spacing token'"
+        },
+        {
+          "text": "응답이 시스템에 적합한 표현 수단이 없을 때 escalate/contract 제안을 권한다",
+          "passed": true,
+          "evidence": "L18: '둘 다 없다 → 멈추고 보고합니다. 현 시스템에 이 의도에 맞는 spacing semantic이 없습니다. 추가할지, 1회성 variant로 가둘지 결정 부탁드립니다'"
+        }
+      ],
+      "notes": [],
+      "eval_name": "spacing-approach"
+    },
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 46.9,
+        "tokens": 51396,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "응답이 컴포넌트 호출부가 raw hex / primitive token을 직접 사용하지 않도록 권한다",
+          "passed": true,
+          "evidence": "L3: '호출부에서 색을 직접 만지는 순간 시스템은 졌다' / L11: 'variant 내부에서도 raw hex나 gray[473] 같은 primitive를 꺼내 쓰면 안 된다'"
+        },
+        {
+          "text": "응답이 semantic 토큰 레이어를 컴포넌트와 primitive 사이에 두기를 권한다",
+          "passed": true,
+          "evidence": "L11: '중간에 의도 단위의 의미 토큰이 있어야 한다 — 예컨대 action.primary.default / hover / pressed / focus 같은 상태별 semantic. 이 레이어가 있으면 primary 톤 전체를 한 군데서 흔들 수 있고'"
+        },
+        {
+          "text": "응답이 컴포넌트의 state는 variant 또는 state-specific 토큰으로 표현해야 함을 말한다",
+          "passed": true,
+          "evidence": "L7: '<Button variant=\"primary\" /> 하나로 hover/pressed/focus/disabled가 전부 정의돼 있고, 호출부는 primary가 필요하다는 의도만 선언'"
+        },
+        {
+          "text": "응답이 새 강조 상태가 필요할 때 ad-hoc 색 대신 토큰/contract 추가를 제안한다",
+          "passed": true,
+          "evidence": "L15: '이때 해야 할 일은 색 추가가 아니라 contract 제안이다 ... semantic을 하나 추가하자'"
+        }
+      ],
+      "notes": [],
+      "eval_name": "color-state-language"
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 41.9,
+        "tokens": 51244,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "응답이 flex item의 기본 min-width:auto가 sizing 문제의 흔한 원인임을 짚는다",
+          "passed": true,
+          "evidence": "L11: 'min-width: auto 기본값이 줄어듦을 막고 있을 가능성 매우 높음. 이게 flex sizing 이슈의 1위 원인'"
+        },
+        {
+          "text": "응답이 min-width:0(또는 min-height:0)으로 해제하는 방법을 언급한다",
+          "passed": false,
+          "evidence": "원인이 min-width: auto임은 명시했고 '원인이 min-width: auto 면 1줄'이라고 암시했으나, 실제 해제 방법인 'min-width: 0'을 명시적으로 적지 않음. 보고 형태에서 진단이 강하고 처방이 약함."
+        },
+        {
+          "text": "응답이 width:100% / overflow:hidden / max-width 같은 즉답 패치를 증상 가리기로 경고한다",
+          "passed": true,
+          "evidence": "L3: '증상에 width: 100%나 flex-shrink를 던지기 전에' / L28: '진단 없이 width: 100%로 덮는 건 증상 패치고, 다음 사람이 그걸 패턴으로 오인함'"
+        },
+        {
+          "text": "응답이 자식이 아니라 parent / layout context까지 함께 점검하라고 말한다",
+          "passed": true,
+          "evidence": "L17: '부모: display, flex-direction, align-items, justify-content, gap, width / min-width / max-width' — parent 속성 명시적으로 점검 항목에 포함"
+        }
+      ],
+      "notes": [],
+      "eval_name": "flex-sizing-diagnosis"
+    },
+    {
+      "eval_id": 0,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 39.0,
+        "tokens": 45434,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "응답이 sibling spacing 처리 방식으로 parent의 gap(flex/grid)을 권한다",
+          "passed": true,
+          "evidence": "L15: 'flex + gap 또는 grid + gap — 가장 안전'"
+        },
+        {
+          "text": "응답이 child margin으로 sibling 간격을 만드는 패턴의 위험성을 명시한다",
+          "passed": true,
+          "evidence": "L18: '(피할 것) 자식의 margin-top/bottom — collapsing·재사용성 둘 다 깨진다'"
+        },
+        {
+          "text": "응답이 raw px 대신 디자인 토큰(semantic 또는 layout 컴포넌트) 사용을 권한다",
+          "passed": true,
+          "evidence": "L22: '간격 값은 디자인 토큰(spacing.sm/md/lg 등)에서. 매직 넘버(16px) 금지'"
+        },
+        {
+          "text": "응답이 시스템에 적합한 표현 수단이 없을 때 escalate/contract 제안을 권한다",
+          "passed": false,
+          "evidence": "응답이 토큰 사용/모범 패턴까지는 권하지만, '시스템에 표현 수단이 없을 때 멈추고 보고/contract 제안' 같은 escalation 흐름은 명시하지 않음."
+        }
+      ],
+      "notes": [],
+      "eval_name": "spacing-approach"
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 36.1,
+        "tokens": 45378,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "응답이 컴포넌트 호출부가 raw hex / primitive token을 직접 사용하지 않도록 권한다",
+          "passed": true,
+          "evidence": "L22: '린트: 컴포넌트 파일에서 raw hex / rgb / primitive 토큰 직접 사용을 금지'"
+        },
+        {
+          "text": "응답이 semantic 토큰 레이어를 컴포넌트와 primitive 사이에 두기를 권한다",
+          "passed": true,
+          "evidence": "L7-10: 'Primitive (reference) tokens ... Semantic (alias) tokens ... 컴포넌트는 무조건 semantic만 참조하고, semantic은 primitive를 가리킵니다'"
+        },
+        {
+          "text": "응답이 컴포넌트의 state는 variant 또는 state-specific 토큰으로 표현해야 함을 말한다",
+          "passed": true,
+          "evidence": "L14: 'hover/pressed/focus/selected/emphasis는 각각 토큰으로 박제' — state별 token으로 캡슐화하는 흐름"
+        },
+        {
+          "text": "응답이 새 강조 상태가 필요할 때 ad-hoc 색 대신 토큰/contract 추가를 제안한다",
+          "passed": true,
+          "evidence": "L18: '새 상태가 필요하면 토큰부터 추가하고 그 다음 컴포넌트가 씁니다' / L24-26: '리뷰 체크리스트: 새 색 추가 PR은 토큰 정의 변경 없이는 머지 금지'"
+        }
+      ],
+      "notes": [],
+      "eval_name": "color-state-language"
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 38.7,
+        "tokens": 45362,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "응답이 flex item의 기본 min-width:auto가 sizing 문제의 흔한 원인임을 짚는다",
+          "passed": true,
+          "evidence": "L9: 'flex item의 기본 min-width는 auto인데, 이게 자식 내용의 min-content로 해석돼서 왜 안 줄어들지의 대부분 원인'"
+        },
+        {
+          "text": "응답이 min-width:0(또는 min-height:0)으로 해제하는 방법을 언급한다",
+          "passed": true,
+          "evidence": "L9: 'min-width: 0 (또는 min-height: 0)을 풀어야 flex-shrink가 비로소 동작함. 중첩 flex에서는 부모 쪽도 같이 풀어야 전파됨'"
+        },
+        {
+          "text": "응답이 width:100% / overflow:hidden / max-width 같은 즉답 패치를 증상 가리기로 경고한다",
+          "passed": true,
+          "evidence": "L3: '추측으로 flex: 1 박고 width: 100% 박기 시작하면 미궁에 빠져' — 즉답 패치 패턴 경고"
+        },
+        {
+          "text": "응답이 자식이 아니라 parent / layout context까지 함께 점검하라고 말한다",
+          "passed": true,
+          "evidence": "L13: '부모의 사이즈가 결정돼 있나. 자식이 % / flex-grow로 잡혀 있는데 부모 자체가 height: auto / min-height: 0 으로 콘텐츠에 끌려다니면, 자식은 늘어날 공간 자체가 없음'"
+        }
+      ],
+      "notes": [],
+      "eval_name": "flex-sizing-diagnosis"
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.9167,
+        "stddev": 0.1443,
+        "min": 0.75,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 42.0667,
+        "stddev": 4.7522,
+        "min": 37.4,
+        "max": 46.9
+      },
+      "tokens": {
+        "mean": 51269.0,
+        "stddev": 116.529,
+        "min": 51167,
+        "max": 51396
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.9167,
+        "stddev": 0.1443,
+        "min": 0.75,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 37.9333,
+        "stddev": 1.5948,
+        "min": 36.1,
+        "max": 39.0
+      },
+      "tokens": {
+        "mean": 45391.3333,
+        "stddev": 37.8065,
+        "min": 45362,
+        "max": 45434
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.00",
+      "time_seconds": "+4.1",
+      "tokens": "+5878"
+    }
+  },
+  "notes": [
+    "Pass rate가 동일(91.7%)하지만 두 그룹이 실패하는 assertion이 다름 — 같은 점수, 다른 blind spot.",
+    "with_skill 유일 실패: eval-2의 'min-width:0 명시'. 진단은 강하나 처방을 명시하지 않음 → skill에 '진단 후 처방까지 한 줄로 같이' 가이드가 약함.",
+    "without_skill 유일 실패: eval-0의 'escalate/contract 제안'. 모범 패턴은 다 짚지만 '시스템에 표현 수단이 없으면 보고' 같은 escalation 흐름은 baseline 사고에 없음 → skill의 핵심 차별점.",
+    "with_skill은 +4.1s, +5878 tokens 비용 (skill 본문 로드 오버헤드). 추상 프롬프트에서는 비용 대비 효과 폭이 좁음.",
+    "추상 프롬프트가 강한 baseline 지식을 끌어내므로 skill의 margin이 좁게 보임. 같은 skill을 unit-level 안티패턴 프롬프트에 돌리면 delta가 더 크게 벌어질 가능성이 있음.",
+    "두 그룹의 응답 톤이 일관되게 다름: with_skill = 결정·책임·blast radius framing 우선 / without_skill = mechanism·tools·진단 단계 우선. skill의 실제 효과는 '정답률'보다 '판단의 순서'에 가깝게 나타남."
+  ]
+}
