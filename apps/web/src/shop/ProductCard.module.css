@@ -1,0 +1,195 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 218px;
+  flex-shrink: 0;
+  height: 344px;
+  padding: var(--space-md);
+  border-radius: var(--radius-card-lg);
+  color: var(--text-on-citrus);
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform var(--duration-base) var(--ease-spring),
+    box-shadow var(--duration-base) var(--ease-snap);
+  scroll-snap-align: start;
+}
+
+.card[data-surface='citrus'] {
+  background: linear-gradient(155deg, #ff9a4f 0%, #ff7a1a 55%, #e85a06 100%);
+  box-shadow: var(--shadow-card-citrus);
+}
+
+.card[data-surface='mango'] {
+  background: linear-gradient(155deg, #fcd35e 0%, #f7b32b 55%, #d88d11 100%);
+  box-shadow: 0 22px 42px -18px rgba(216, 141, 17, 0.55);
+}
+
+.card[data-surface='grape'] {
+  background: linear-gradient(155deg, #b6a3f5 0%, #8b6dd9 55%, #5d44a8 100%);
+  box-shadow: 0 22px 42px -18px rgba(93, 68, 168, 0.55);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card::before {
+  /* hand-painted radial light from upper-left */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    140px 140px at 20% 18%,
+    rgba(255, 255, 255, 0.4) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.topRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  z-index: 2;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+  letter-spacing: var(--letter-tight);
+  line-height: var(--line-height-tight);
+  color: var(--text-on-citrus);
+  font-variation-settings: 'opsz' 96;
+}
+
+.fav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-circle);
+  color: var(--text-on-citrus);
+  transition: background var(--duration-quick) var(--ease-snap);
+}
+
+.fav:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.fav[data-on='true'] {
+  color: #fff;
+}
+
+/* fruit positioned to bleed beyond top/right edges */
+.fruit {
+  position: absolute;
+  top: -22px;
+  right: -42px;
+  width: 250px;
+  height: 250px;
+  z-index: 1;
+  filter: drop-shadow(0 18px 16px rgba(101, 46, 0, 0.25));
+  pointer-events: none;
+  transition: transform var(--duration-slow) var(--ease-spring);
+}
+
+.card:hover .fruit {
+  transform: scale(1.04) rotate(-3deg);
+}
+
+.bottom {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-2xl);
+  letter-spacing: var(--letter-tight);
+  line-height: var(--line-height-tight);
+  font-variation-settings: 'opsz' 144;
+}
+
+.variety {
+  font-size: var(--font-size-xs);
+  color: var(--text-on-citrus-soft);
+  letter-spacing: var(--letter-snug);
+}
+
+.varietyStrong {
+  color: var(--text-on-citrus);
+  font-weight: var(--font-weight-bold);
+}
+
+.sizeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+.sizeLabel {
+  font-size: var(--font-size-md);
+  color: var(--text-on-citrus-soft);
+  font-weight: var(--font-weight-medium);
+}
+
+.sizePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px 6px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--text-on-citrus);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.addButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--brand-orange-strong);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--letter-wider);
+  transition: transform var(--duration-quick) var(--ease-spring);
+}
+
+.card[data-surface='mango'] .addButton {
+  color: #c97a08;
+}
+
+.card[data-surface='grape'] .addButton {
+  color: #4d3a8a;
+}
+
+.addButton:hover {
+  transform: scale(1.02);
+}
+
+.addButton:active {
+  transform: scale(0.97);
+}
+
+.addButton[data-added='true'] {
+  background: var(--text-strong);
+  color: #fff;
+}

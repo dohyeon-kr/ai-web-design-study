@@ -1,0 +1,74 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-sm);
+  background: var(--surface-phone);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 -6px 24px -18px rgba(31, 42, 55, 0.18);
+}
+
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  aspect-ratio: 1;
+  max-width: 56px;
+  border-radius: var(--radius-circle);
+  color: var(--text-muted);
+  transition: color var(--duration-quick) var(--ease-snap);
+}
+
+.tab:hover {
+  color: var(--text-default);
+}
+
+.tab[data-active='true'] {
+  color: var(--brand-orange);
+}
+
+.tab[data-active='true']::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 24px;
+  height: 3px;
+  background: var(--brand-orange);
+  border-radius: 999px;
+  transform: translateX(-50%);
+}
+
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--brand-orange);
+  color: #fff;
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--surface-phone);
+  animation: badgeBump var(--duration-base) var(--ease-spring);
+}
+
+@keyframes badgeBump {
+  0% {
+    transform: scale(0.4);
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

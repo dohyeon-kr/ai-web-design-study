@@ -1,7 +1,62 @@
 .page {
-  min-height: 100dvh;
-  background: var(--surface-page);
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding: var(--space-xl) var(--space-md);
+  padding: var(--space-2xl) var(--space-xl);
+}
+
+.stage {
+  display: flex;
+  gap: var(--space-3xl);
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.brand {
+  position: fixed;
+  top: var(--space-xl);
+  left: var(--space-2xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  color: var(--text-strong);
+  font-variation-settings: 'opsz' 96;
+  z-index: 5;
+}
+
+.brandDot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-circle);
+  background: var(--brand-orange);
+  box-shadow: 0 0 0 4px rgba(255, 122, 26, 0.18);
+}
+
+.tag {
+  position: fixed;
+  bottom: var(--space-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  letter-spacing: var(--letter-wider);
+  text-transform: uppercase;
+  z-index: 5;
+}
+
+@media (max-width: 820px) {
+  .stage {
+    gap: var(--space-2xl);
+  }
+  .brand,
+  .tag {
+    display: none;
+  }
 }
