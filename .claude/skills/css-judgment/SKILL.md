@@ -1,169 +1,234 @@
 ---
 name: css-judgment
-description: CSS 작업 시 "어떻게 쓸지"가 아니라 "어떻게 판단할지"를 가이드한다. padding/margin/gap/width/height/position/z-index/overflow를 만지거나, hover·focus·responsive를 손보거나, primitive token(spacing.4, gray.100 같은)을 직접 쓰려 하거나, 사진·아바타·복합 일러스트를 SVG로 흉내내려 할 때 반드시 이 skill을 거친다. 사이즈 결정 주체(외부 layout vs 내부 content)·블록 모델 보존·token 위계·관찰 가능한 안티패턴(child margin으로 형제 간격, 의도 없는 `flex:1`/`width:100%`, raw px·임의 토큰 조합)을 작업 전에 정렬한다.
+description: Use when modifying CSS — adjusting padding/margin/gap/width/height/position/z-index/overflow, hover/focus/responsive states, or directly using primitive tokens (raw spacing, raw colors). Guides the judgment of CSS work rather than the syntax. Determines sizing ownership (outer layout vs inner content), preserves the box model, enforces token hierarchy, and catches observable anti-patterns: child margin for sibling spacing, intentionless `flex:1` or `width:100%`, raw px / one-off token combinations, gradient hex composition at call sites, `margin: auto` for large-area distribution. For image assets (faces, photos, composite illustrations) trigger image-asset-strategy first; for post-work visual comparison trigger visual-reference-compare.
 ---
 
 # CSS Judgment Skill
 
-CSS는 속성 조합이 아니라 **책임·언어·범위의 설계**다.
-픽셀이 아니라 의도를 다룬다.
+CSS is not a combination of properties but a design of **responsibility, language, and scope**.
+Work with intent, not pixels.
 
-세 lens:
-1. **Layout responsibility** — 누가 sizing·spacing·alignment를 책임지는가
-2. **Design language** — 시스템의 의미 단위를 따르는가
-3. **Blast radius** — 변경이 어디까지 닿는가
+Three lenses:
+1. **Layout responsibility** — who owns sizing, spacing, alignment
+2. **Design language** — does this follow the system's meaning units
+3. **Blast radius** — how far does this change reach
+
+Phase split:
+- Pre-work asset decisions → **image-asset-strategy** skill
+- CSS judgment during work → this skill
+- Post-work reference comparison → **visual-reference-compare** skill
 
 ---
 
-## 1. 작업 전 자가질문
+## 1. Pre-edit Self-questions
 
-답이 안 나오면 멈춰서 코드를 **읽는다**. 추측으로 박지 않는다.
+If any answer is "I don't know," stop and **read** the code before writing.
 
-### Sizing 주체 (가장 먼저)
+### Pre-flight: image-asset-strategy gate (must pass before CSS work)
 
-이 요소의 사이즈는 **외부 layout이 정하는가, 내부 content가 정하는가?**
+If the task started from a **design reference image / mockup / Figma URL** and that reference contains any photographic or composite visual asset (human face, model figure, product photo, hero shot, editorial visual, 3D-rendered cluster, illustration, brand mark), **stop and run `image-asset-strategy` first**. Do not begin writing layout / styling code, and especially do not type `<svg>` for any of those slots, before the asset catalog has been produced and the routing decision (imagegen vs placeholder) is made.
 
-- **외부 중심** (카드, 그리드 셀, nav, 화면 영역) — 콘텐츠는 컨테이너에 맞춰 들어간다. 패턴: 부모 `padding` + `display: flex/grid`, 자식 `flex: 1` 또는 `grid 1fr`. 자식이 정사각형이면 `aspect-ratio: 1`. **자식에 fixed px 박지 마라.**
-- **내부 중심** (버튼 라벨, 칩, 텍스트) — 콘텐츠가 사이즈를 결정. 자식 `fit-content`, 부모는 `gap`으로 정렬만.
+If you find yourself already drawing a face with `<circle>` + `<path>`, or mocking a product photo with stacked SVG shapes — that's a sign this gate was skipped. Stop, revert that draft, and run `image-asset-strategy` now.
 
-이 결정을 안 하면 "fixed 48px 자식이 컨테이너 분배와 충돌해서 padding 소실" 같은 사고가 난다.
+### Sizing ownership (first CSS question)
+
+Who decides this element's size?
+
+- **Outer-layout-driven** (cards, grid cells, nav, screen areas) — content fits the container. Pattern: parent `padding` + `display: flex/grid`, children `flex: 1` or `grid 1fr`. Children that should be square use `aspect-ratio: 1`. **Do not pin fixed px on the children.**
+- **Inner-content-driven** (button labels, chips, text) — content size determines it. Children use `fit-content`; parent only aligns via `gap`.
+- **Scroll/carousel item** — when the parent is a horizontal/vertical scroller and children appear N-at-a-time in the viewport, an **intentional fixed size + `flex-shrink: 0`** is correct. Still keep the fixed value in a semantic token (`--size-card-product`) rather than raw px scattered in components.
+
+Failing to make this decision leads to bugs like "fixed 48px child collides with container distribution and erases padding."
 
 ### Layout context
 
-- 이 요소: `block` / `flex item` / `grid item` / `absolute`?
-- 외부 spacing 책임: parent `gap` (default) vs child `margin` (overlap 같은 명확한 예외만)
-- `overflow` / `z-index` / `position`을 도입한다면 의도를 한 문장으로 말할 수 있는가?
-- **Fill 속성**(`flex: 1` / `width: 100%` / `height: 100%`)을 박을 때: parent의 `flex-direction`을 확인했는가? column parent에서 `flex: 1`은 세로 확장이다.
+- This element: `block` / `flex item` / `grid item` / `absolute`?
+- External spacing ownership: parent `gap` (default) vs child `margin` (only clear exceptions like overlap)
+- Introducing `overflow` / `z-index` / `position`? State the intent in one sentence.
+- **Fill properties** (`flex: 1`, `width: 100%`, `height: 100%`) — have you confirmed the parent's `flex-direction`? In a column parent, `flex: 1` expands vertically.
+- **`margin-*: auto`** to push a child? Fine for small-area push. Large-area distribution (e.g., pushing a footer to the bottom) belongs in the parent via `justify-content: space-between` or `grid-template-rows: auto 1fr auto` — the child should not carry layout decisions.
 
 ### Design language
 
-- 이 값을 **semantic token**으로 표현 가능한가? 없으면 **component variant**로 가능한가?
-- 둘 다 안 되면 — 시스템에 표현 수단이 없다는 신호. CSS를 박지 말고 **contract를 제안**.
+- Can the value (color, spacing, size) be expressed via a **semantic token**? If not, via a **component variant**?
+- **Gradients / multi-stop color compositions** are part of the design language too. Do not compose `linear-gradient(155deg, #ff9a4f 0%, #ff7a1a 55%, #e85a06 100%)` at the call site each time — give gradients semantic tokens (`--surface-card-citrus-gradient`) or trap them inside variant CSS.
+- Neither works? That's a signal the system lacks expressive vocabulary. Don't apply CSS; **propose a contract** instead.
 
-### Blast radius / Visual sanity
+### Blast radius
 
-- 변경이 닿는 모든 호출부를 떠올렸는가?
-- viewport에서 reference와 같이 띄워 비교했는가? "안 깨졌다"가 아니라 padding·비율 일치.
+- Have you considered every call site this change touches?
+- Are you modifying common components or layout primitives?
 
----
-
-## 2. 핵심 원칙
-
-1. **Spacing 책임은 parent** — sibling 간격은 parent `gap`. child margin은 overlap 같은 명백한 예외만.
-2. **Token 위계** — `Component variant > Semantic token > Primitive token`. primitive 직접 사용은 새 semantic을 제안하면서.
-3. **Layout 속성 수정은 의도 명시** — `display`/`position`/`overflow`/`z-index` 변경은 한 문장으로 말할 수 있을 때만.
-4. **Fill 속성은 증상 패치 신호** — `width: 100%`, `flex: 1`, `height: 100%`를 박기 전에 진짜 원인 찾기. flex item이 안 줄어들면 `min-width: 0` 누락이 1위 원인.
-5. **Block model 보존** — declared `padding`/`border`/`margin`은 그대로 보존돼야 한다. 자식의 총 사이즈가 컨테이너 inner를 초과하면 padding이 시각적으로 소실된다. 자식을 fixed로 줄여 맞추지 말고, **relative 분배**(flex:1 / grid 1fr)로 재설계.
-6. **사진·아바타·복합 일러스트는 직접 SVG로 그리지 않는다** — circles/paths 조합으로 face/photo를 흉내내려는 충동은 차단. 단순 UI 아이콘만 inline SVG OK. 사진성 자산은 codex 위임(반드시 `image-create` 스킬 명시) 또는 placeholder + 보고.
-7. **시스템 수준 문제는 보고** — 동일 패턴 반복, semantic 부재, 1-context-only 컴포넌트는 직접 박지 말고 token/variant/contract 추가를 제안.
+(Visual comparison belongs in the post-work **visual-reference-compare** skill.)
 
 ---
 
-## 3. Anti-patterns (보이면 즉시 멈춤)
+## 2. Core Principles
 
-- ❌ 형제 간격을 child `margin-bottom` / `margin-right`로 해결
-- ❌ 임의 px (`padding: 7px`)
-- ❌ primitive token의 1회성 조합 (`var(--space-3) var(--space-5)`)
-- ❌ 의도 없는 `flex: 1` — parent `flex-direction` 확인 없이 박기
-- ❌ Fixed-size 자식 + `space-around`/`space-between` + `flex-shrink: 0`으로 컨테이너 overflow → padding 소실
-- ❌ `width: 100%` / `height: 100%`로 layout 문제 패치
-- ❌ `gap` + `justify-content: space-around` 동시 사용 (분배 충돌)
-- ❌ z-index 원시 숫자, 의도 없는 `overflow: hidden`, `!important`
-- ❌ 공통 컴포넌트의 `display`/`position` 변경
-- ❌ Semantic token 있는데 primitive로 우회
-- ❌ 사진·face avatar·복합 일러스트를 SVG 도형으로 흉내
+1. **Parent owns spacing** — sibling gaps via parent `gap`. Child margin is allowed only for **named exceptions**: (a) overlap (stacked avatars with `margin-left: -10px`), (b) fine push with `margin: auto` (small alignment nudge — large-area distribution stays in the parent), (c) **bleed pattern** — `margin: 0 calc(var(--space-md) * -1)` on a horizontal-scroll row to break the parent's padding and run edge-to-edge. Anything else is a smell.
+2. **Token hierarchy** — `Component variant > Semantic token > Primitive token`. Direct primitive use means proposing a new semantic.
+   - Beyond spacing/color/radius, **width/height/offset px** for intended widget intrinsic sizes (touch target, icon size) should default to semantic tokens (`--size-touch-min`, `--size-icon-md`). Clear exceptions like 1px borders or -1px overlaps are fine.
+   - **Gradients / multi-stop colors** belong in tokens or variant CSS — no composition at call sites.
+3. **State intent when changing layout properties** — `display` / `position` / `overflow` / `z-index` only when you can name the intent in one sentence.
+4. **Fill properties are a patch signal** — find the real cause before stamping `width: 100%`, `flex: 1`, or `height: 100%`. The #1 cause of flex items refusing to shrink is a missing `min-width: 0`.
+5. **Preserve the box model** — declared `padding` / `border` / `margin` must remain. When child total size exceeds container inner width, padding gets visually consumed. Don't shrink children to fit; **redesign with relative distribution** (flex:1 / grid 1fr).
+6. **Don't fake photographic assets with raw SVG** — faces/photos/composite illustrations drawn from circles and paths become awkward placeholders. Asset decisions go to **image-asset-strategy** (delegate to imagegen, or placeholder + report). Simple UI icons (search, home, menu) as inline SVG are fine.
+7. **Report system-level problems** — repeated patterns, missing semantics, one-context-only components: don't keep stamping CSS, propose a token/variant/contract addition.
+8. **CSS unit hierarchy** — `rem` for text and UI density, `px` for visual crispness, `%`/`vw`/`vh`/`fr` for layout proportions, `em` for spacing that should scale with the component's own font size. Don't unify everything in rem or everything in px.
+   - **rem**: `font-size`, `line-height`, `padding`, `margin`, `gap`, `border-radius`. Respects users who change the browser default font size (accessibility).
+   - **px**: `border-width`, hairlines, icon stroke, sub-pixel alignment, 1px overlaps.
+   - **%, vw/vh, fr**: layout proportions (grid `1fr 1fr`, viewport-based `100vh`, etc.).
+   - **em**: spacing that should follow the component's own `font-size` (e.g., button horizontal padding scaling with label text).
 
 ---
 
-## 4. 예시
+## 3. Anti-patterns (stop on sight)
 
-### 예시 1 — 사이즈 결정 주체 잘못 판단 (SocialCard 회고)
+- ❌ **Faking a photographic asset with raw SVG primitives** — `<svg>` `<circle>` `<rect>` `<path>` arrangements to stand in for a **human face / model figure / product photo / hero image / editorial moodshot / 3D object cluster / illustration / brand mark**. Route to `image-asset-strategy`. This anti-pattern is the most frequent cause of session restarts in UI work; do not even draft "a quick SVG version for now."
+- ❌ Child `margin-bottom` / `margin-right` for sibling spacing (`margin: auto` for fine push and **bleed pattern** — `margin: 0 calc(var(--space-md) * -1)` to break parent padding for a full-bleed row — are the named exceptions; large-area distribution still belongs in the parent)
+- ❌ Arbitrary px (`padding: 7px`, `width: 250px`, `top: -22px`) — raw px scattered without semantic tokens
+- ❌ One-off primitive token combinations (`var(--space-3) var(--space-5)`)
+- ❌ Multi-stop gradient hex composition at the call site (`linear-gradient(155deg, #ff9a4f 0%, #ff7a1a 55%, #e85a06 100%)`)
+- ❌ Intentionless `flex: 1` — stamping it without checking parent `flex-direction`
+- ❌ Fixed-size children + `space-around`/`space-between` + `flex-shrink: 0` → container overflow → padding erased
+- ❌ `width: 100%` / `height: 100%` patching a layout problem
+- ❌ `gap` + `justify-content: space-around` simultaneously (distribution conflict)
+- ❌ `margin: auto` for large-area distribution (footer-to-bottom push) — use parent `justify-content` or `grid-template-rows`
+- ❌ Raw `z-index` numbers, intentionless `overflow: hidden`, `!important`
+- ❌ Changing `display` / `position` on shared components
+- ❌ Bypassing a semantic token with a primitive
+- ❌ Unifying text/UI density in px (rem territory) or 1px hairlines in rem (px territory)
 
-상황: 카드 안에 3개 icon button. 자식 button을 `width: 44px; flex-shrink: 0`로 박았고, 부모를 `padding: 16px; justify-content: space-around; gap: 12px`로 함. 카드 inner width(141px)보다 자식+gap 총합(156px)이 큼 → 자식이 우측으로 overflow → **우측 padding이 시각적으로 0**으로 소실.
+---
 
-**나쁨**
+## 4. Examples
+
+### Example 1 — Misjudged sizing ownership
+
+A card holds three icon buttons. Children pinned at `width: 44px; flex-shrink: 0`, parent at `padding: 16px; space-around; gap: 12px`. The card's inner width (141px) is smaller than children+gap (156px) → children overflow right → **right padding visually becomes 0**.
+
+**Bad**
 ```css
 .card { padding: 16px; display: flex; justify-content: space-around; gap: 12px; }
 .iconButton { width: 44px; height: 44px; flex-shrink: 0; }
 ```
 
-**좋음** (block model 보존, 자식이 컨테이너에 fit)
+**Good** (box model preserved; children fit the container)
 ```css
 .card { padding: 12px; display: flex; align-items: center; gap: 4px; }
-.iconButton { flex: 1; aspect-ratio: 1; /* size는 부모가 결정 */ }
+.iconButton { flex: 1; aspect-ratio: 1; /* parent decides size */ }
 ```
 
-판단: "카드 디자인이 핵심"인 구조 → 외부 layout이 사이즈 결정 → 자식은 fixed px가 아니라 `flex: 1` + `aspect-ratio: 1`로 비례 표현.
+Judgment: "Card design is the anchor" → outer layout owns sizing → children get `flex: 1` + `aspect-ratio: 1`, not fixed px.
 
-### 예시 2 — 리스트 아이템 간격 (parent gap)
+### Example 2 — `margin: auto` for large-area distribution
 
-**나쁨**
+**Bad**
+```css
+.screen { display: flex; flex-direction: column; }
+.navHolder { margin-top: auto; } /* child carries the layout decision */
+```
+
+**Good**
+```css
+.screen { display: grid; grid-template-rows: auto 1fr auto; }
+/* or display: flex + justify-content: space-between */
+```
+
+Judgment: Pinning the footer to the bottom is a layout decision → express it in the parent.
+
+### Example 3 — List item gap (parent gap)
+
+**Bad**
 ```tsx
-<Item style={{ marginBottom: 12 }} /> // 자식이 외부 간격을 들고 다님
 <Item style={{ marginBottom: 12 }} />
-<Item /> {/* :last-child로 제거 — 패치의 패치 */}
+<Item style={{ marginBottom: 12 }} />
+<Item /> {/* :last-child cleanup — patch-on-patch */}
 ```
 
-**좋음**
+**Good**
 ```tsx
 <List gap="md"><Item /><Item /><Item /></List>
 ```
 
-### 예시 3 — flex item 줄어들지 않음
+### Example 4 — Composing a gradient at the call site
 
-**나쁨**
+**Bad**
 ```css
-.child { width: 100%; }      /* 증상 패치 */
-.parent { overflow: hidden; } /* 잘라서 숨김 */
+.card[data-surface='citrus'] {
+  background: linear-gradient(155deg, #ff9a4f 0%, #ff7a1a 55%, #e85a06 100%);
+}
+.card[data-surface='mango'] {
+  background: linear-gradient(155deg, #fcd35e 0%, #f7b32b 55%, #d88d11 100%);
+}
 ```
 
-**좋음**
+**Good**
+```css
+:root {
+  --surface-card-citrus: linear-gradient(155deg, #ff9a4f 0%, #ff7a1a 55%, #e85a06 100%);
+  --surface-card-mango:  linear-gradient(155deg, #fcd35e 0%, #f7b32b 55%, #d88d11 100%);
+}
+.card[data-surface='citrus'] { background: var(--surface-card-citrus); }
+.card[data-surface='mango']  { background: var(--surface-card-mango); }
+```
+
+Judgment: Gradients are part of the design language. Reserve the chance to reuse the same tone elsewhere; keep it tokenized.
+
+### Example 5 — flex item refusing to shrink
+
+**Bad**
+```css
+.child { width: 100%; }      /* symptom patch */
+.parent { overflow: hidden; } /* hides it by clipping */
+```
+
+**Good**
 ```css
 .child { min-width: 0; }
 ```
 
-flex item의 기본 `min-width: auto`가 줄어듦을 막는 진짜 원인.
+The flex item's default `min-width: auto` blocks shrinking — that's the real cause.
 
-### 예시 4 — 시각 자산 (face avatar)
+### Example 6 — Face avatar (visual asset)
 
-**나쁨**: `<svg>` 안에 `<circle>` + `<path>`로 face 흉내 → 어색한 placeholder
+**Bad**: `<svg>` with `<circle>` + `<path>` mimicking a face → an awkward placeholder.
 
-**좋음 (codex 환경)**: codex 서브에이전트에 위임. 프롬프트에 "**image-create 스킬을 사용해서**" 명시 + 파일 위치 + 사이즈/톤.
-
-**좋음 (codex 환경 아님)**: 단색 원형 placeholder + `aria-label`로 자리 명세 + 상위에 "image-create로 채울 자리" 보고.
+**Good**: route through **image-asset-strategy**. In the codex environment, invoke `imagegen` directly for the asset; outside it, drop a placeholder and report the gap.
 
 ---
 
-## 5. 검증
+## 5. Verification
 
-수정 후 다음에 답할 수 있어야 한다:
+After edits, you should be able to answer:
 
-1. **재사용 안전성** — 다른 컨테이너에 넣어도 외부 간격이 깨지지 않는가?
-2. **State 매트릭스** — hover/focus/disabled/loading/empty 동일 처리되는가?
-3. **Token 위생** — 추가한 값이 variant 또는 semantic으로 표현 가능한가?
-4. **Blast radius** — import하는 모든 곳에 시각 회귀가 없는가?
-5. **실측 비교** — viewport에서 reference와 띄워 padding·비율 일치하는가? Fill 속성을 박은 곳은 특히 의도하지 않은 축으로 확장됐는지 확인.
+1. **Reuse safety** — does the component still behave correctly placed in another container?
+2. **State matrix** — hover/focus/disabled/loading/empty handled consistently?
+3. **Token hygiene** — every value (spacing/color/gradient/size) expressible as variant or semantic? No raw scatter?
+4. **Blast radius** — no visual regression at any importing call site?
+
+For visual / measurement comparison against a reference image, hand off to **visual-reference-compare**.
 
 ---
 
-## 6. 보고 형식
+## 6. Reporting
 
-**무엇을 바꿨는가**가 아니라 **무엇을 결정했는가**를 먼저 말한다.
+Lead with **what you decided**, not what you changed.
 
 ```
-결정: <사이즈 결정 주체 / 책임 이동 / variant 추가 등>
-이유: <왜 다른 방법이 아닌가>
-변경: <파일 + 핵심 변경>
-검증: <어떤 viewport / 어떤 state / overlay 결과>
-잔여: <placeholder 자리 / 후속 작업 / 우려>
+Decision: <sizing ownership / responsibility shift / variant addition / etc.>
+Why: <why not the alternatives>
+Changes: <files + core change>
+Verification: <viewports / states / measurements>
+Outstanding: <placeholder gaps / follow-ups / concerns>
 ```
 
-placeholder를 둔 자리는 반드시 "잔여"에 명시 — image-create로 채워야 본 자산 완성.
+Always list placeholder gaps under "Outstanding".
 
 ---
 
-## 7. 우회 가능한 경우
+## 7. Skip conditions
 
-- 사용자가 파일·라인 수준의 정확한 변경 지시를 줬고 위 원칙과 충돌하지 않을 때
-- 단순 typo / 문자열 수정처럼 시각·레이아웃과 무관한 변경
-- 디자인 시스템 등록된 단순 UI 아이콘을 그릴 때 (§2 원칙 6의 ✅ 케이스)
+- The user gave a precise file/line directive that doesn't conflict with these principles.
+- Pure typo / string-only edits unrelated to visual or layout concerns.
+- Drawing a simple UI icon already registered in the design system (the ✅ case in principle 6).
