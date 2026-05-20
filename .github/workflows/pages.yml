@@ -62,6 +62,12 @@ jobs:
             branch="${entry#*:}"
             echo "::group::Build ${branch} -> showcases/${slug}/"
 
+            if ! git ls-remote --exit-code --heads origin "${branch}" >/dev/null; then
+              echo "::warning::branch ${branch} not found on origin; skipping ${slug}"
+              echo "::endgroup::"
+              continue
+            fi
+
             git fetch --depth=1 origin "${branch}:${branch}"
 
             wt="${RUNNER_TEMP}/wt-${slug}"
