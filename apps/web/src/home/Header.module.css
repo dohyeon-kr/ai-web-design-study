@@ -1,45 +1,61 @@
 .header {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-}
-
-.avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-circle);
-  overflow: hidden;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-md) var(--space-sm);
+  border-bottom: 1px solid var(--border-hairline);
+  background: var(--surface-app);
   flex-shrink: 0;
-  position: relative;
 }
 
-.greeting {
-  flex: 1;
-  min-width: 0;
-  text-align: center;
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
 }
 
-.greetingLine {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
+.logo {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-tight);
   color: var(--text-strong);
   line-height: var(--line-height-tight);
 }
 
-.dateLine {
-  font-size: var(--font-size-sm);
-  color: var(--text-default);
-  line-height: var(--line-height-snug);
+.logoDot {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+  color: var(--text-accent);
+  line-height: var(--line-height-tight);
 }
 
-.searchButton {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-circle);
-  border: 1px solid var(--border-icon-button);
-  color: var(--text-strong);
+.actions {
   display: flex;
+  gap: var(--space-2xs);
+}
+
+.iconButton {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  color: var(--text-strong);
+  border-radius: var(--radius-circle);
+}
+
+.iconButton:active {
+  background: var(--surface-chip);
+}
+
+.bagDot {
+  position: absolute;
+  top: 6px;
+  right: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-circle);
+  background: var(--surface-dot);
+  border: 1.5px solid var(--surface-app);
 }

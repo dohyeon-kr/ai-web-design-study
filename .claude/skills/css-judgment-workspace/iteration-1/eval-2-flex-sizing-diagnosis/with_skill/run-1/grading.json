@@ -21,5 +21,5 @@
       "evidence": "L17: '부모: display, flex-direction, align-items, justify-content, gap, width / min-width / max-width' — parent 속성 명시적으로 점검 항목에 포함"
     }
   ],
-  "summary": {"passed": 3, "failed": 1, "total": 4, "pass_rate": 0.75}
+  "summary": { "passed": 3, "failed": 1, "total": 4, "pass_rate": 0.75 }
 }

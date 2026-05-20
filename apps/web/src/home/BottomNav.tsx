@@ -1,20 +1,24 @@
+import { useState } from 'react';
 import styles from './BottomNav.module.css';
 
+type NavKey = 'shop' | 'discover' | 'brand' | 'saved' | 'my';
+
 type NavItem = {
-  key: 'home' | 'apps' | 'stats' | 'profile';
+  key: NavKey;
   label: string;
   icon: () => JSX.Element;
 };
 
 const ITEMS: NavItem[] = [
-  { key: 'home', label: 'Home', icon: HomeIcon },
-  { key: 'apps', label: 'Apps', icon: AppsIcon },
-  { key: 'stats', label: 'Stats', icon: StatsIcon },
-  { key: 'profile', label: 'Profile', icon: ProfileIcon },
+  { key: 'shop', label: 'Shop', icon: ShopIcon },
+  { key: 'discover', label: 'Discover', icon: DiscoverIcon },
+  { key: 'brand', label: 'Brand', icon: BrandIcon },
+  { key: 'saved', label: 'Saved', icon: SavedIcon },
+  { key: 'my', label: 'My', icon: MyIcon },
 ];
 
 export default function BottomNav() {
-  const activeKey: NavItem['key'] = 'home';
+  const [activeKey, setActiveKey] = useState<NavKey>('shop');
   return (
     <nav className={styles.nav} aria-label="Primary">
       <ul className={styles.list}>
@@ -25,11 +29,12 @@ export default function BottomNav() {
             <li key={item.key} className={styles.item}>
               <button
                 type="button"
-                aria-label={item.label}
                 aria-current={isActive ? 'page' : undefined}
                 className={`${styles.button} ${isActive ? styles.buttonActive : ''}`}
+                onClick={() => setActiveKey(item.key)}
               >
                 <Icon />
+                <span className={styles.label}>{item.label}</span>
               </button>
             </li>
           );
@@ -39,48 +44,69 @@ export default function BottomNav() {
   );
 }
 
-function HomeIcon() {
+function ShopIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
-        d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"
+        d="M5 8h14l-1 12H6L5 8Z"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 8V6.2a3 3 0 0 1 6 0V8"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function DiscoverIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="8.2" stroke="currentColor" strokeWidth="1.6" />
+      <path
+        d="m10 10 5-2-2 5-5 2 2-5Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
         strokeLinejoin="round"
       />
     </svg>
   );
 }
 
-function AppsIcon() {
+function BrandIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <rect x="4" y="4" width="6" height="6" rx="1.5" />
-      <rect x="14" y="4" width="6" height="6" rx="1.5" />
-      <rect x="4" y="14" width="6" height="6" rx="1.5" />
-      <rect x="14" y="14" width="6" height="6" rx="1.5" />
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="4" y="6" width="16" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M4 10h16" stroke="currentColor" strokeWidth="1.6" />
     </svg>
   );
 }
 
-function StatsIcon() {
+function SavedIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <rect x="4" y="13" width="4" height="7" rx="1" />
-      <rect x="10" y="8" width="4" height="12" rx="1" />
-      <rect x="16" y="4" width="4" height="16" rx="1" />
-    </svg>
-  );
-}
-
-function ProfileIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="2" />
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
-        d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5"
+        d="M6 4h12v17l-6-4-6 4V4Z"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function MyIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="8.5" r="3.6" stroke="currentColor" strokeWidth="1.6" />
+      <path
+        d="M4.5 20c1.4-3.3 4.3-4.8 7.5-4.8s6.1 1.5 7.5 4.8"
+        stroke="currentColor"
+        strokeWidth="1.6"
         strokeLinecap="round"
       />
     </svg>

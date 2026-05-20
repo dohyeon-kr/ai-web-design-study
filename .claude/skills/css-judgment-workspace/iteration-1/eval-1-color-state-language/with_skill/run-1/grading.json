@@ -21,5 +21,5 @@
       "evidence": "L15: '이때 해야 할 일은 색 추가가 아니라 contract 제안이다 ... semantic을 하나 추가하자'"
     }
   ],
-  "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1.0}
+  "summary": { "passed": 4, "failed": 0, "total": 4, "pass_rate": 1.0 }
 }
