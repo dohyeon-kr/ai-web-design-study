@@ -1,0 +1,547 @@
+.root {
+  padding: var(--space-3xl) var(--space-xl) var(--space-5xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5xl);
+}
+
+.section {
+  max-width: var(--max-width-page);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-brand-strong);
+}
+
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-circle);
+  background: var(--accent-brand);
+}
+
+.sectionHeading {
+  margin: 0;
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-tight);
+  color: var(--text-strong);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
+}
+
+.sectionLede {
+  margin: 0;
+  max-width: var(--max-width-prose);
+  color: var(--text-muted);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ─── Hero ─────────────────────────────────────────────── */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-3xl);
+  align-items: stretch;
+}
+
+.heroCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: var(--font-size-4xl);
+  line-height: var(--line-height-tight);
+  color: var(--text-strong);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+}
+
+.heroTitleAccent {
+  background: linear-gradient(120deg, var(--accent-brand), #ff7eb6 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.heroSub {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  color: var(--text-muted);
+  max-width: 36ch;
+}
+
+.heroActions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.btnPrimary,
+.btnGhost {
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-pill);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.btnPrimary {
+  background: var(--surface-ink);
+  color: var(--text-on-dark);
+}
+
+.btnPrimary:hover {
+  background: var(--accent-brand);
+}
+
+.btnGhost {
+  background: transparent;
+  color: var(--text-strong);
+  border: 1px solid var(--border-strong);
+}
+
+.btnGhost:hover {
+  background: var(--surface-muted);
+}
+
+.heroCard {
+  background: var(--surface-paper);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  box-shadow: var(--shadow-elevated);
+}
+
+.heroCardLabel {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-brand-strong);
+}
+
+.heroCardQuote {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-snug);
+  color: var(--text-strong);
+}
+
+.heroCardFootnote {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  padding-top: var(--space-md);
+  border-top: 1px dashed var(--border-strong);
+}
+
+/* ─── Risk matrix ──────────────────────────────────────── */
+
+.riskGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg);
+}
+
+.riskCard {
+  background: var(--surface-paper);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.riskCardSafe {
+  border-color: color-mix(in srgb, var(--accent-positive) 30%, var(--border-card));
+}
+
+.riskCardDanger {
+  border-color: color-mix(in srgb, var(--accent-warning) 30%, var(--border-card));
+}
+
+.riskBadge {
+  align-self: flex-start;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-pill);
+}
+
+.riskBadgeSafe {
+  background: color-mix(in srgb, var(--accent-positive) 14%, transparent);
+  color: var(--accent-positive);
+}
+
+.riskBadgeDanger {
+  background: color-mix(in srgb, var(--accent-warning) 14%, transparent);
+  color: var(--accent-warning);
+}
+
+.riskTitle {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-strong);
+  line-height: var(--line-height-tight);
+}
+
+.riskList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.riskList li {
+  padding-left: var(--space-md);
+  position: relative;
+  color: var(--text-default);
+  font-size: var(--font-size-md);
+}
+
+.riskList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-circle);
+  background: var(--border-strong);
+}
+
+.riskCardSafe .riskList li::before {
+  background: var(--accent-positive);
+}
+
+.riskCardDanger .riskList li::before {
+  background: var(--accent-warning);
+}
+
+/* ─── Token ladder ────────────────────────────────────── */
+
+.ladder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.ladderRow {
+  display: grid;
+  grid-template-columns: 220px 1fr auto;
+  align-items: center;
+  gap: var(--space-xl);
+  background: var(--surface-paper);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.ladderLevel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.ladderLevelTag {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-subtle);
+}
+
+.ladderLevelName {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-strong);
+}
+
+.ladderExample {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  line-height: var(--line-height-snug);
+}
+
+.ladderVerdict {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-pill);
+}
+
+.verdictRefuse {
+  background: color-mix(in srgb, var(--accent-warning) 14%, transparent);
+  color: var(--accent-warning);
+}
+
+.verdictCautious {
+  background: var(--surface-muted);
+  color: var(--accent-brand-strong);
+}
+
+.verdictPrefer {
+  background: color-mix(in srgb, var(--accent-positive) 14%, transparent);
+  color: var(--accent-positive);
+}
+
+/* ─── Skill structure ─────────────────────────────────── */
+
+.skillLayout {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.skillSteps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.skillStep {
+  background: var(--surface-paper);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card-sm);
+  padding: var(--space-lg);
+  display: flex;
+  gap: var(--space-lg);
+  align-items: flex-start;
+}
+
+.skillStepIndex {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-circle);
+  background: var(--surface-ink);
+  color: var(--text-on-dark);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.skillStepBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.skillStepTitle {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-strong);
+  line-height: var(--line-height-tight);
+}
+
+.skillStepText {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--font-size-md);
+}
+
+/* ─── Code block ──────────────────────────────────────── */
+
+.code {
+  background: var(--surface-code);
+  border-radius: var(--radius-code);
+  padding: var(--space-lg);
+  color: var(--code-text);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+  overflow-x: auto;
+}
+
+.codeBlock {
+  margin: 0;
+  white-space: pre;
+}
+
+.codeHeader {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--code-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.codeHeader::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-circle);
+  background: var(--code-text-accent);
+}
+
+.codeAccent {
+  color: var(--code-text-accent);
+}
+
+.codeWarn {
+  color: #ff8a8a;
+}
+
+.codeOk {
+  color: #7ee2a7;
+}
+
+/* ─── Conclusion ──────────────────────────────────────── */
+
+.conclusion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: stretch;
+}
+
+.flowCard {
+  background: var(--surface-paper);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.flowTitle {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-strong);
+}
+
+.flowSteps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.flowStep {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  color: var(--text-default);
+  background: var(--surface-muted);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-card-sm);
+  position: relative;
+}
+
+.flowStepActive {
+  background: var(--surface-ink);
+  color: var(--text-on-dark);
+}
+
+.flowArrow {
+  text-align: center;
+  color: var(--text-subtle);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+}
+
+.callout {
+  background: linear-gradient(135deg, var(--surface-ink), #2a1f4f);
+  color: var(--text-on-dark);
+  border-radius: var(--radius-card);
+  padding: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+.calloutLabel {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--code-text-accent);
+}
+
+.calloutQuote {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+  color: var(--text-on-dark);
+  font-weight: var(--font-weight-semibold);
+}
+
+.calloutFootnote {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: color-mix(in srgb, var(--text-on-dark) 70%, transparent);
+}
+
+/* ─── Responsive ──────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .hero,
+  .riskGrid,
+  .skillLayout,
+  .conclusion {
+    grid-template-columns: 1fr;
+  }
+
+  .ladderRow {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .ladderVerdict {
+    justify-self: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .root {
+    padding: var(--space-xl) var(--space-md) var(--space-3xl);
+    gap: var(--space-3xl);
+  }
+
+  .heroTitle {
+    font-size: var(--font-size-3xl);
+  }
+
+  .sectionHeading {
+    font-size: var(--font-size-2xl);
+  }
+}

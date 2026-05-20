@@ -211,7 +211,21 @@ agent skill
 
 ```
 apps/
-  web/                 # Vite + React 실험용 앱
+  web/                 # Vite + React 통합 셸 — 랜딩(연구 소개) + 쇼케이스(탭 + iframe)
+.github/
+  workflows/pages.yml  # main 셸 + 각 예시 브랜치 빌드 → /showcases/<slug>/ 로 합쳐서 gh-pages 배포
 .claude/
   skills/              # Agent skill 실험 (css-judgment, image-asset-strategy, visual-reference-compare)
 ```
+
+## 배포
+
+`main`에 push되면 GitHub Actions가:
+1. 셸을 빌드 (base=`/ai-web-design-study/`)
+2. 각 예시 브랜치를 워크트리로 체크아웃 → 빌드 (base=`/ai-web-design-study/showcases/<slug>/`)
+3. 모두 합쳐 GitHub Pages로 배포
+
+새로운 예시 추가 시:
+1. `feature/<example>-ui` 브랜치에서 예시 작성
+2. `apps/web/src/showcase/examples.ts`에 슬롯 추가 (`status: 'live'`, `embedPath` 지정)
+3. `.github/workflows/pages.yml`의 `entries` 배열에 `"<slug>:<branch>"` 추가
