@@ -1,0 +1,98 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  SITE_BASE: /ai-web-design-study/
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: pnpm
+
+      - name: Install dependencies (shell)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shell
+        run: pnpm --dir apps/web exec vite build --base "${SITE_BASE}"
+
+      - name: Stage shell into site/
+        run: |
+          mkdir -p site
+          cp -R apps/web/dist/. site/
+
+      # Each entry: "<slug>:<branch>" — slug matches embedPath in src/showcase/examples.ts
+      - name: Build example branches
+        run: |
+          set -euo pipefail
+          entries=(
+            "fruit-shop:feature/fruit-shop-ui"
+          )
+          for entry in "${entries[@]}"; do
+            slug="${entry%%:*}"
+            branch="${entry#*:}"
+            echo "::group::Build ${branch} -> showcases/${slug}/"
+
+            git fetch --depth=1 origin "${branch}:${branch}"
+
+            wt="${RUNNER_TEMP}/wt-${slug}"
+            git worktree add "${wt}" "${branch}"
+
+            (
+              cd "${wt}"
+              pnpm install --frozen-lockfile
+              pnpm --dir apps/web exec vite build --base "${SITE_BASE}showcases/${slug}/"
+              dest="${GITHUB_WORKSPACE}/site/showcases/${slug}"
+              mkdir -p "${dest}"
+              cp -R apps/web/dist/. "${dest}/"
+            )
+
+            git worktree remove "${wt}" --force
+            echo "::endgroup::"
+          done
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
