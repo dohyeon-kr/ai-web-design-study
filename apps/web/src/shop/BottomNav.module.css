@@ -26,12 +26,12 @@
   color: var(--text-default);
 }
 
-.tab[data-active='true'] {
+.tab[data-active="true"] {
   color: var(--brand-orange);
 }
 
-.tab[data-active='true']::after {
-  content: '';
+.tab[data-active="true"]::after {
+  content: "";
   position: absolute;
   bottom: -4px;
   left: 50%;

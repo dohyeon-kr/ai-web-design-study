@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import FruitArt from './FruitArt';
-import { ChevronDownIcon, HeartIcon } from './icons';
 import styles from './ProductCard.module.css';
+import { ChevronDownIcon, HeartIcon } from './icons';
 import type { Product, SizeKey } from './types';
 
 type Props = {
@@ -65,9 +65,7 @@ export default function ProductCard({
           <div className={styles.subtitle}>{product.subtitle}</div>
           <div className={styles.variety}>
             {product.variety.split(' at ')[0]} at{' '}
-            <span className={styles.varietyStrong}>
-              Rs.{Math.round(product.pricePerKg * 1.5)}
-            </span>{' '}
+            <span className={styles.varietyStrong}>Rs.{Math.round(product.pricePerKg * 1.5)}</span>{' '}
             Only
           </div>
         </div>
@@ -80,12 +78,7 @@ export default function ProductCard({
           </span>
         </div>
 
-        <span
-          className={styles.addButton}
-          data-added={justAdded}
-          onClick={handleAdd}
-          role="button"
-        >
+        <span className={styles.addButton} data-added={justAdded} onClick={handleAdd} role="button">
           {justAdded ? 'ADDED ✓' : 'ADD TO CART'}
         </span>
       </div>

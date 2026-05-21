@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import BottomNav from './BottomNav';
+import styles from './HomeScreen.module.css';
+import ProductCard from './ProductCard';
 import { CATEGORIES, PRODUCTS } from './data';
 import { MenuIcon, MicIcon, SearchIcon } from './icons';
-import ProductCard from './ProductCard';
-import styles from './HomeScreen.module.css';
 import type { CategoryKey, Product, SizeKey } from './types';
 
 type Props = {

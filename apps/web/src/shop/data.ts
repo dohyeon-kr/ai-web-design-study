@@ -1,5 +1,7 @@
 import type { Category, Product } from './types';
 
+const asset = (path: string): string => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+
 export const CATEGORIES: Category[] = [
   { key: 'fruits', label: 'Fruits', emoji: '🍓', tone: 'warm' },
   { key: 'vegetables', label: 'Vegetables', emoji: '🥦', tone: 'cool' },
@@ -20,7 +22,7 @@ export const PRODUCTS: Product[] = [
     description:
       'Considered to be the most aromatic in the orange family — bright, tart, with a long sweet finish.',
     cardSurface: 'citrus',
-    imageSrc: '/fruit/orange.png',
+    imageSrc: asset('fruit/orange.png'),
     imageAlt: 'A bright navel orange with a single green leaf',
   },
   {
@@ -34,7 +36,7 @@ export const PRODUCTS: Product[] = [
     description:
       'Honey-sweet, fiberless flesh from the orchards of Andhra — the queen of summer table mangoes.',
     cardSurface: 'mango',
-    imageSrc: '/fruit/mango.png',
+    imageSrc: asset('fruit/mango.png'),
     imageAlt: 'A whole Banganpalli mango with a sliced cheek',
   },
   {
@@ -48,10 +50,9 @@ export const PRODUCTS: Product[] = [
     description:
       'Deep-purple, slip-skin grapes with a rich musky aroma — perfect for snacking or fresh juice.',
     cardSurface: 'grape',
-    imageSrc: '/fruit/grapes.png',
+    imageSrc: asset('fruit/grapes.png'),
     imageAlt: 'A bunch of deep purple Concord grapes with a leaf',
   },
 ];
 
-export const findProduct = (id: string): Product | undefined =>
-  PRODUCTS.find((p) => p.id === id);
+export const findProduct = (id: string): Product | undefined => PRODUCTS.find((p) => p.id === id);

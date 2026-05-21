@@ -53,11 +53,7 @@ export function BackIcon(p: Props) {
 
 export function HeartIcon({ filled, ...p }: Props & { filled?: boolean }) {
   return (
-    <svg
-      {...base(p)}
-      fill={filled ? 'currentColor' : 'none'}
-      stroke="currentColor"
-    >
+    <svg {...base(p)} fill={filled ? 'currentColor' : 'none'} stroke="currentColor">
       <path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 5.65-7 10-7 10z" />
     </svg>
   );

@@ -1,6 +1,6 @@
+import styles from './DetailScreen.module.css';
 import FruitArt from './FruitArt';
 import { BackIcon, BagIcon, ChevronRightIcon, HeartIcon, PlusIcon, StarIcon } from './icons';
-import styles from './DetailScreen.module.css';
 import type { Product, SizeKey } from './types';
 import { SIZE_MULTIPLIER } from './types';
 
@@ -32,12 +32,7 @@ export default function DetailScreen({
   return (
     <div className={styles.screen}>
       <div className={styles.topBar}>
-        <button
-          type="button"
-          className={styles.iconButton}
-          onClick={onBack}
-          aria-label="Back"
-        >
+        <button type="button" className={styles.iconButton} onClick={onBack} aria-label="Back">
           <BackIcon width={22} height={22} />
         </button>
         <button

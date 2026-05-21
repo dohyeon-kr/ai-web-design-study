@@ -19,11 +19,9 @@ body {
   font-size: var(--font-size-md);
   line-height: var(--line-height-relaxed);
   color: var(--text-default);
-  background:
-    radial-gradient(1100px 700px at 8% -10%, #ffd9a8 0%, transparent 65%),
+  background: radial-gradient(1100px 700px at 8% -10%, #ffd9a8 0%, transparent 65%),
     radial-gradient(900px 700px at 110% 10%, #ffc488 0%, transparent 60%),
-    radial-gradient(1200px 900px at 50% 110%, #ffe1bd 0%, transparent 70%),
-    var(--surface-page);
+    radial-gradient(1200px 900px at 50% 110%, #ffe1bd 0%, transparent 70%), var(--surface-page);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;

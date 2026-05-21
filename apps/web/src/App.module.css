@@ -27,7 +27,7 @@
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-lg);
   color: var(--text-strong);
-  font-variation-settings: 'opsz' 96;
+  font-variation-settings: "opsz" 96;
   z-index: 5;
 }
 

@@ -31,7 +31,7 @@
   background: rgba(31, 42, 55, 0.06);
 }
 
-.iconButton[data-on='true'] {
+.iconButton[data-on="true"] {
   color: var(--accent-strawberry);
 }
 
@@ -62,15 +62,11 @@
 }
 
 .heroBg::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    200px 200px at 25% 18%,
-    rgba(255, 255, 255, 0.4) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(200px 200px at 25% 18%, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
 }
 
 .heroFruit {
@@ -143,7 +139,7 @@
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-tight);
   color: var(--text-strong);
-  font-variation-settings: 'opsz' 144;
+  font-variation-settings: "opsz" 144;
 }
 
 .price {
@@ -154,7 +150,7 @@
   display: inline-flex;
   align-items: baseline;
   gap: 2px;
-  font-variation-settings: 'opsz' 96;
+  font-variation-settings: "opsz" 96;
 }
 
 .priceUnit {
@@ -202,17 +198,15 @@
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-md);
   text-align: center;
-  transition:
-    background var(--duration-quick) var(--ease-snap),
-    color var(--duration-quick) var(--ease-snap),
-    transform var(--duration-quick) var(--ease-spring);
+  transition: background var(--duration-quick) var(--ease-snap), color var(--duration-quick)
+    var(--ease-snap), transform var(--duration-quick) var(--ease-spring);
 }
 
 .sizePill:hover {
   transform: translateY(-1px);
 }
 
-.sizePill[data-active='true'] {
+.sizePill[data-active="true"] {
   background: var(--surface-pill-size-active);
   color: var(--brand-orange-strong);
   box-shadow: var(--shadow-pop);

@@ -36,7 +36,7 @@
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-tight);
   color: var(--text-strong);
-  font-variation-settings: 'opsz' 144;
+  font-variation-settings: "opsz" 144;
 }
 
 .menuButton {
@@ -143,10 +143,8 @@
   white-space: nowrap;
   flex-shrink: 0;
   scroll-snap-align: start;
-  transition:
-    background var(--duration-quick) var(--ease-snap),
-    color var(--duration-quick) var(--ease-snap),
-    transform var(--duration-quick) var(--ease-spring);
+  transition: background var(--duration-quick) var(--ease-snap), color var(--duration-quick)
+    var(--ease-snap), transform var(--duration-quick) var(--ease-spring);
 }
 
 .chipEmoji {
@@ -165,17 +163,17 @@
   color: var(--text-strong);
 }
 
-.chipActive[data-tone='warm'] {
+.chipActive[data-tone="warm"] {
   background: var(--surface-chip-active-warm);
   color: var(--accent-strawberry);
 }
 
-.chipActive[data-tone='cool'] {
+.chipActive[data-tone="cool"] {
   background: var(--surface-chip-active-cool);
   color: var(--accent-leaf);
 }
 
-.chipActive[data-tone='yellow'] {
+.chipActive[data-tone="yellow"] {
   background: var(--surface-chip-active-yellow);
   color: var(--accent-yellow);
 }

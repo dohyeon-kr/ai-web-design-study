@@ -1,5 +1,5 @@
-import { BellIcon, HomeIcon, OffersIcon, UserIcon } from './icons';
 import styles from './BottomNav.module.css';
+import { BellIcon, HomeIcon, OffersIcon, UserIcon } from './icons';
 
 type TabKey = 'home' | 'offers' | 'alerts' | 'profile';
 
@@ -29,7 +29,11 @@ export default function BottomNav({ active, cartCount, onChange }: Props) {
         aria-label="Offers"
       >
         <OffersIcon width={22} height={22} />
-        {cartCount > 0 && <span className={styles.badge} key={cartCount}>{cartCount}</span>}
+        {cartCount > 0 && (
+          <span className={styles.badge} key={cartCount}>
+            {cartCount}
+          </span>
+        )}
       </button>
       <button
         type="button"

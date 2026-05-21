@@ -90,10 +90,9 @@
   --letter-wider: 0.16em;
 
   /* === Elevation === */
-  --shadow-phone: 0 40px 80px -28px rgba(216, 116, 28, 0.45),
-    0 18px 40px -22px rgba(31, 42, 55, 0.25);
-  --shadow-card: 0 20px 40px -20px rgba(216, 116, 28, 0.55),
-    0 6px 16px -10px rgba(31, 42, 55, 0.18);
+  --shadow-phone: 0 40px 80px -28px rgba(216, 116, 28, 0.45), 0 18px 40px -22px
+    rgba(31, 42, 55, 0.25);
+  --shadow-card: 0 20px 40px -20px rgba(216, 116, 28, 0.55), 0 6px 16px -10px rgba(31, 42, 55, 0.18);
   --shadow-card-citrus: 0 22px 42px -18px rgba(255, 122, 26, 0.55);
   --shadow-pop: 0 10px 24px -10px rgba(31, 42, 55, 0.2);
   --shadow-fab: 0 12px 26px -10px rgba(255, 122, 26, 0.65);

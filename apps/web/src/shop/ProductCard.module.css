@@ -13,23 +13,22 @@
   cursor: pointer;
   overflow: hidden;
   isolation: isolate;
-  transition:
-    transform var(--duration-base) var(--ease-spring),
-    box-shadow var(--duration-base) var(--ease-snap);
+  transition: transform var(--duration-base) var(--ease-spring), box-shadow var(--duration-base)
+    var(--ease-snap);
   scroll-snap-align: start;
 }
 
-.card[data-surface='citrus'] {
+.card[data-surface="citrus"] {
   background: linear-gradient(155deg, #ff9a4f 0%, #ff7a1a 55%, #e85a06 100%);
   box-shadow: var(--shadow-card-citrus);
 }
 
-.card[data-surface='mango'] {
+.card[data-surface="mango"] {
   background: linear-gradient(155deg, #fcd35e 0%, #f7b32b 55%, #d88d11 100%);
   box-shadow: 0 22px 42px -18px rgba(216, 141, 17, 0.55);
 }
 
-.card[data-surface='grape'] {
+.card[data-surface="grape"] {
   background: linear-gradient(155deg, #b6a3f5 0%, #8b6dd9 55%, #5d44a8 100%);
   box-shadow: 0 22px 42px -18px rgba(93, 68, 168, 0.55);
 }
@@ -40,14 +39,10 @@
 
 .card::before {
   /* hand-painted radial light from upper-left */
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    140px 140px at 20% 18%,
-    rgba(255, 255, 255, 0.4) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(140px 140px at 20% 18%, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -66,7 +61,7 @@
   letter-spacing: var(--letter-tight);
   line-height: var(--line-height-tight);
   color: var(--text-on-citrus);
-  font-variation-settings: 'opsz' 96;
+  font-variation-settings: "opsz" 96;
 }
 
 .fav {
@@ -84,7 +79,7 @@
   background: rgba(255, 255, 255, 0.18);
 }
 
-.fav[data-on='true'] {
+.fav[data-on="true"] {
   color: #fff;
 }
 
@@ -119,7 +114,7 @@
   font-size: var(--font-size-2xl);
   letter-spacing: var(--letter-tight);
   line-height: var(--line-height-tight);
-  font-variation-settings: 'opsz' 144;
+  font-variation-settings: "opsz" 144;
 }
 
 .variety {
@@ -173,11 +168,11 @@
   transition: transform var(--duration-quick) var(--ease-spring);
 }
 
-.card[data-surface='mango'] .addButton {
+.card[data-surface="mango"] .addButton {
   color: #c97a08;
 }
 
-.card[data-surface='grape'] .addButton {
+.card[data-surface="grape"] .addButton {
   color: #4d3a8a;
 }
 
@@ -189,7 +184,7 @@
   transform: scale(0.97);
 }
 
-.addButton[data-added='true'] {
+.addButton[data-added="true"] {
   background: var(--text-strong);
   color: #fff;
 }

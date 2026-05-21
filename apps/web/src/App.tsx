@@ -3,7 +3,7 @@ import styles from './App.module.css';
 import DetailScreen from './shop/DetailScreen';
 import HomeScreen from './shop/HomeScreen';
 import PhoneFrame from './shop/PhoneFrame';
-import { findProduct, PRODUCTS } from './shop/data';
+import { PRODUCTS, findProduct } from './shop/data';
 import type { SizeKey } from './shop/types';
 import { SIZE_MULTIPLIER } from './shop/types';
 
