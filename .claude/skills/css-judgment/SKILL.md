@@ -100,6 +100,9 @@ Failing to make this decision leads to bugs like "fixed 48px child collides with
 - ❌ Changing `display` / `position` on shared components
 - ❌ Bypassing a semantic token with a primitive
 - ❌ Unifying text/UI density in px (rem territory) or 1px hairlines in rem (px territory)
+- ❌ **Grid item without `min-width: 0`** when an inner child can be wider than the track (long text, `<pre>` code block, image, mono-spaced URL). The grid track refuses to shrink → the whole grid overflows the viewport, cropping the right edge silently. Same root cause as Example 5 (flex), but the symptom is "section is wider than viewport" instead of "child won't shrink."
+- ❌ **`align-items: stretch` (default) + sibling-with-shorter-content** in grid/flex → the shorter card stretches to the taller sibling and grows an awkward empty band of background. Either let the shorter card keep its intrinsic height (`align-self: start`) or rebalance content so both sides are visually full.
+- ❌ **Choosing the responsive breakpoint by the wrong child** — a 2-col grid where one child is a long code block needs a wider breakpoint than a 2-col grid where both children are short text. A single "all 2-col layouts collapse at 900px" rule will leave the heavier layout broken between 900 and ~1024px. Decide per-layout, not per-skill.
 
 ---
 
@@ -177,20 +180,84 @@ Judgment: Pinning the footer to the bottom is a layout decision → express it i
 
 Judgment: Gradients are part of the design language. Reserve the chance to reuse the same tone elsewhere; keep it tokenized.
 
-### Example 5 — flex item refusing to shrink
+### Example 5 — flex / grid item refusing to shrink
+
+Default `min-width: auto` on flex and grid items lets the item demand the intrinsic width of its widest descendant. A long URL, a `<pre>` block, an `<input>`, a mono-spaced API path — any one of them can pin the item open, forcing the whole layout wider than the viewport.
+
+**Bad** (flex symptom)
+```css
+.child { width: 100%; }       /* symptom patch */
+.parent { overflow: hidden; }  /* hides it by clipping */
+```
+
+**Bad** (grid symptom — same root cause)
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.layout > .code-column pre { /* long code block */ }
+/* → section overflows viewport on smaller screens; right edge cropped */
+```
+
+**Good** (both)
+```css
+.layout > * { min-width: 0; }
+```
+
+The fix is one line. The detection is the hard part — **right edge cropped or horizontal scroll appearing at unexpected widths is the symptom; check grid/flex children for `min-width: 0` first**, before reaching for `overflow-x: hidden` (which only hides the bug).
+
+### Example 8 — Grid stretch + short sibling = empty band
+
+A hero is `display: grid; grid-template-columns: 1.2fr 1fr; align-items: stretch` (the default). The left column has a long headline + paragraph + buttons. The right column is a small quote card with three lines. Stretch makes the card grow to match the left column → an awkward empty background band appears below the quote.
 
 **Bad**
 ```css
-.child { width: 100%; }      /* symptom patch */
-.parent { overflow: hidden; } /* hides it by clipping */
+.hero {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  /* align-items: stretch is the default — card stretches and gains empty space */
+}
 ```
 
-**Good**
+**Good — option A** (let the smaller card keep its intrinsic height)
 ```css
-.child { min-width: 0; }
+.hero { display: grid; grid-template-columns: 1.2fr 1fr; align-items: start; }
+.heroCard { align-self: start; } /* explicit, even if redundant with align-items */
 ```
 
-The flex item's default `min-width: auto` blocks shrinking — that's the real cause.
+**Good — option B** (rebalance: push the card's footnote to the bottom so the empty space becomes a deliberate gap)
+```css
+.heroCard { display: flex; flex-direction: column; }
+.heroCardFootnote { margin-top: auto; }
+```
+
+**Good — option C** (the empty space is real because the right card is too thin — add a second piece of content there: a signature, a related link, a date stamp). Layout choices are content choices.
+
+Judgment rule: when one child of an `align-items: stretch` parent is consistently shorter, ask *"is the gap because of layout default or because the content is genuinely missing?"* before patching.
+
+### Example 9 — Per-layout breakpoint, not per-skill breakpoint
+
+A landing page has four `display: grid` 2-column layouts: hero (1.2fr 1fr, both short), risk matrix (1fr 1fr, both short cards), skill structure (1.05fr 1fr, **one column is a long code block**), conclusion (1fr 1fr, both short). Defining one `@media (max-width: 900px) { all-of-them: 1fr }` looks tidy but leaves skill-structure broken between 900px and ~1024px — the code column overflows because it cannot shrink below its intrinsic content width.
+
+**Bad** (one breakpoint for all)
+```css
+@media (max-width: 900px) {
+  .hero, .riskGrid, .skillLayout, .conclusion { grid-template-columns: 1fr; }
+}
+```
+
+**Good** (the heavier layout collapses earlier)
+```css
+@media (max-width: 1024px) {
+  .skillLayout { grid-template-columns: 1fr; }  /* contains a long code block */
+}
+@media (max-width: 900px) {
+  .hero, .riskGrid, .conclusion { grid-template-columns: 1fr; }
+}
+```
+
+Judgment rule: breakpoints follow **content**, not **design consistency**. If you reuse one breakpoint, the layout with the heaviest column will silently break first.
 
 ### Example 6 — Face avatar (visual asset)
 
