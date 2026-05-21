@@ -1,0 +1,55 @@
+.frame {
+  width: 100%;
+  max-width: 412px;
+  min-height: calc(100dvh - var(--space-md) * 2);
+  background: var(--surface-app);
+  border-radius: var(--radius-card);
+  box-shadow: 0 24px 60px rgba(255, 74, 22, 0.18);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding-bottom: 96px;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 0;
+}
+
+.section {
+  padding: 0 var(--space-md);
+}
+
+.sectionHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-sm);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-strong);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.sectionMore {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  background: none;
+}
+
+.sectionMore::after {
+  content: ' ›';
+}

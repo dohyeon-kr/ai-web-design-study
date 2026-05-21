@@ -1,0 +1,76 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) var(--space-md) var(--space-sm);
+  position: sticky;
+  top: 0;
+  background: var(--surface-app);
+  z-index: 10;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-card-sm);
+  background: linear-gradient(135deg, #ff6b3d, #ffb020);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  color: var(--text-on-hero);
+  font-weight: var(--font-weight-black);
+  box-shadow: 0 4px 12px rgba(255, 74, 22, 0.35);
+}
+
+.brand {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-black);
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.iconBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-circle);
+  background: var(--surface-page);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  position: relative;
+}
+
+.dot {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-circle);
+  background: var(--surface-hero);
+  border: 2px solid var(--surface-app);
+}
+
+.profile {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-circle);
+  background: linear-gradient(135deg, #ffb020, #ff6b3d);
+  display: grid;
+  place-items: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-on-hero);
+}

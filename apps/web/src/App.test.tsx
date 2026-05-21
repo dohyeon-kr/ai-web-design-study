@@ -3,22 +3,28 @@ import { describe, expect, it } from 'vitest';
 import App from './App';
 
 describe('App', () => {
-  it('홈 화면의 인사말을 렌더링한다', () => {
+  it('홈 화면의 브랜드명과 포인트 카운터를 렌더링한다', () => {
     render(<App />);
-    expect(screen.getByText(/Hello, Sandra/i)).toBeInTheDocument();
+    expect(screen.getByText(/포인트팡/)).toBeInTheDocument();
+    expect(screen.getByText(/2,480/)).toBeInTheDocument();
   });
 
-  it('Your plan 섹션과 두 개의 PlanCard를 렌더링한다', () => {
+  it('네 가지 미션 카드를 렌더링한다', () => {
     render(<App />);
-    expect(screen.getByRole('heading', { name: /Your plan/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Yoga Group/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Balance/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /클릭형 미션 시작/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /포스팅형 미션 시작/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /보너스 미션 시작/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /자동형 미션 시작/ })).toBeInTheDocument();
   });
 
-  it('주간 스트립의 Wed 25를 선택 상태로 렌더링한다', () => {
+  it('랭킹 미리보기에 본인 행을 강조해서 표시한다', () => {
     render(<App />);
-    const selectedTab = screen.getByRole('tab', { selected: true });
-    expect(selectedTab).toHaveTextContent('Wed');
-    expect(selectedTab).toHaveTextContent('25');
+    expect(screen.getByText(/나 \(도현\)/)).toBeInTheDocument();
+  });
+
+  it('현재 페이지를 홈으로 표시한다', () => {
+    render(<App />);
+    const homeNav = screen.getByRole('button', { current: 'page' });
+    expect(homeNav).toHaveTextContent('홈');
   });
 });

@@ -1,0 +1,226 @@
+.hero {
+  margin: 0 var(--space-md);
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(circle at 100% 0%, #ffb020 0%, transparent 55%),
+    linear-gradient(180deg, var(--surface-hero) 0%, var(--surface-hero-deep) 100%);
+  color: var(--text-on-hero);
+  padding: var(--space-lg) var(--space-lg) var(--space-md);
+  box-shadow: var(--shadow-hero);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  width: 160px;
+  height: 160px;
+  border-radius: var(--radius-circle);
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.greeting {
+  font-size: var(--font-size-sm);
+  opacity: 0.85;
+  margin: 0;
+}
+
+.guideBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--text-on-hero);
+  padding: 6px 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  backdrop-filter: blur(8px);
+}
+
+.pointBlock {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  position: relative;
+  z-index: 1;
+}
+
+.pointValue {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-black);
+  letter-spacing: -0.03em;
+  line-height: var(--line-height-tight);
+}
+
+.pointUnit {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  opacity: 0.92;
+}
+
+.subText {
+  font-size: var(--font-size-sm);
+  opacity: 0.85;
+  margin: 0;
+}
+
+.subText strong {
+  font-weight: var(--font-weight-bold);
+  color: #fff;
+}
+
+.progressBar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  position: relative;
+}
+
+.progressFill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #fff5dc 0%, #ffd24a 100%);
+  border-radius: var(--radius-pill);
+  width: var(--progress, 0%);
+}
+
+.actionRow {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.cashOut {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-pill);
+  background: var(--text-on-hero);
+  color: var(--surface-hero-deep);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+}
+
+.history {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--text-on-hero);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+}
+
+/* Stamp Banner */
+.stampBanner {
+  margin: calc(var(--space-md) * -0.5) var(--space-md) 0;
+  background: var(--surface-app);
+  border-radius: var(--radius-card);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  position: relative;
+  z-index: 2;
+  border: 1px solid var(--border-card);
+}
+
+.stampHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stampTitle {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-strong);
+  margin: 0;
+}
+
+.stampDays {
+  font-size: var(--font-size-xs);
+  color: var(--text-accent);
+  font-weight: var(--font-weight-bold);
+}
+
+.stampRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-2xs);
+}
+
+.stampCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stampLabel {
+  font-size: var(--font-size-2xs);
+  color: var(--text-muted);
+}
+
+.stampBubble {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-stamp);
+  background: var(--surface-stamp-off);
+  display: grid;
+  place-items: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-muted);
+  position: relative;
+}
+
+.stampBubble.done {
+  background: var(--surface-stamp-on);
+  color: var(--surface-hero-deep);
+}
+
+.stampBubble.today {
+  background: linear-gradient(135deg, #fff, #ffe7d3);
+  color: var(--surface-hero-deep);
+  outline: 2px dashed var(--surface-hero);
+  outline-offset: -2px;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+.stampReward {
+  font-size: var(--font-size-2xs);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.stampBubble.today + .stampReward {
+  color: var(--text-accent);
+  font-weight: var(--font-weight-bold);
+}

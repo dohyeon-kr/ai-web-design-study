@@ -1,0 +1,110 @@
+.panel {
+  border-radius: var(--radius-card);
+  background: var(--surface-rank);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  border: 1px solid var(--border-card);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-strong);
+}
+
+.title em {
+  font-style: normal;
+  color: var(--text-accent);
+}
+
+.timer {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: var(--space-xs);
+  border-radius: var(--radius-card-sm);
+}
+
+.row.me {
+  background: var(--surface-app);
+  border: 1.5px dashed var(--surface-hero);
+}
+
+.medal {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-circle);
+  display: grid;
+  place-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-black);
+  color: var(--text-on-hero);
+}
+
+.medal[data-rank="1"] {
+  background: var(--surface-medal-gold);
+}
+
+.medal[data-rank="2"] {
+  background: var(--surface-medal-silver);
+}
+
+.medal[data-rank="3"] {
+  background: var(--surface-medal-bronze);
+}
+
+.medal[data-rank="other"] {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-icon);
+}
+
+.name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-strong);
+}
+
+.delta {
+  font-size: var(--font-size-2xs);
+  color: var(--text-positive);
+  margin-top: 2px;
+  display: block;
+  font-weight: var(--font-weight-medium);
+}
+
+.point {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-black);
+  color: var(--text-strong);
+  text-align: right;
+}
+
+.point span {
+  font-size: var(--font-size-2xs);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-bold);
+  margin-left: 2px;
+}

@@ -1,10 +1,10 @@
 import styles from './App.module.css';
-import HomeScreen from './home/HomeScreen';
+import HomePage from './home/HomePage';
 
 export default function App() {
   return (
     <div className={styles.page}>
-      <HomeScreen />
+      <HomePage />
     </div>
   );
 }
