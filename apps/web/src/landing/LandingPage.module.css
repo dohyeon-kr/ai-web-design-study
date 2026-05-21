@@ -339,6 +339,10 @@
 }
 
 .skillSteps {
+  /* reset browser default <ol> padding-inline-start (~40px) and marker */
+  margin: 0;
+  padding: 0;
+  list-style: none;
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
