@@ -11,17 +11,17 @@
   flex-direction: column;
   gap: var(--space-sm);
   background: var(--cardSurface);
-  border: 1px solid var(--border-card);
+  border: 1px solid var(--surface-divider);
   position: relative;
   text-align: left;
   min-height: 156px;
   width: 100%;
-  transition: transform var(--transition-snap), box-shadow var(--transition-fast);
+  transition: transform var(--transition-snap), border-color var(--transition-fast);
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(255, 74, 22, 0.12);
+  transform: translateY(-1px);
+  border-color: var(--text-strong);
 }
 
 .card:active {
@@ -43,7 +43,6 @@
   place-items: center;
   font-size: 18px;
   color: var(--text-on-hero);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   transition: transform var(--transition-snap);
 }
 

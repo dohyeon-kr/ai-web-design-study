@@ -8,24 +8,49 @@ const STEPS: { label: string; done: boolean }[] = [
   { label: '출금계좌', done: false },
 ];
 
+const REWARD_POINT = 5000;
+
+function formatPoint(p: number): string {
+  return p.toLocaleString('ko-KR');
+}
+
 export default function OnboardingShortcut() {
   const remaining = STEPS.filter((s) => !s.done).length;
+  const nextStep = STEPS.find((s) => !s.done);
+  const currentIdx = STEPS.findIndex((s) => !s.done);
   return (
     <button type="button" className={styles.card} aria-label="온보딩 이어하기">
-      <div className={styles.icon} aria-hidden>
-        <IconRocket size={22} />
-      </div>
-      <div className={styles.body}>
-        <h4 className={styles.title}>3단계만 더하면 5,000P 즉시 적립</h4>
-        <div className={styles.steps}>
-          {STEPS.map((s) => (
-            <span key={s.label} className={[styles.step, s.done ? styles.done : ''].filter(Boolean).join(' ')}>
-              {s.done ? '✓' : '○'} {s.label}
-            </span>
-          ))}
+      <div className={styles.head}>
+        <div className={styles.icon} aria-hidden>
+          <IconRocket size={22} />
+        </div>
+        <div className={styles.body}>
+          <h4 className={styles.title}>
+            <b>{remaining}단계만</b>
+            <span>더하면</span>
+            <span className={styles.rewardChip}>+{formatPoint(REWARD_POINT)}P</span>
+          </h4>
         </div>
       </div>
-      <span className={styles.cta}>{remaining > 0 ? '이어하기' : '완료'}</span>
+      <div className={styles.progress} role="progressbar" aria-valuenow={STEPS.length - remaining} aria-valuemin={0} aria-valuemax={STEPS.length}>
+        {STEPS.map((s, i) => {
+          const cls = [
+            styles.segment,
+            s.done ? styles.done : '',
+            i === currentIdx ? styles.current : '',
+          ]
+            .filter(Boolean)
+            .join(' ');
+          return <span key={s.label} className={cls} />;
+        })}
+      </div>
+      <div className={styles.statusRow}>
+        <span className={styles.nextStep}>
+          <span>다음:</span>
+          <b>{nextStep?.label ?? '완료'}</b>
+        </span>
+        <span className={styles.cta}>이어하기</span>
+      </div>
     </button>
   );
 }

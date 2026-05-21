@@ -1,23 +1,32 @@
 :root {
-  /* Surfaces — purpose-named */
-  --surface-page: #fff4ec;
+  /* Palette principle (Refactoring UI + NN/g 60-30-10):
+     60% warm neutrals + 30% coral-family tonal + 10% coral accent.
+     Semantic exceptions only: green = positive, medal = gold/silver/bronze, navy = dark accent. */
+
+  /* Surfaces — purpose-named.
+     Discipline: white/neutral 60% surfaces, coral 10% accent only.
+     theme color는 hero + 액션 + 아이콘 배지에만 — 카드 표면은 흰색. */
+  --surface-page: #f4f4f6;
+  --surface-page-edge: #ebebef;
   --surface-app: #ffffff;
-  --surface-hero: #ff6b3d;
-  --surface-hero-deep: #ff4a16;
+  --surface-hero: #ff4a16;
+  --surface-hero-deep: #c8270a;
   --surface-stamp-on: #ffd24a;
-  --surface-stamp-off: #fff1d6;
-  --surface-card-click: #fff1ea;
-  --surface-card-posting: #eaf4ff;
-  --surface-card-bonus: #fff4d4;
-  --surface-card-auto: #ecf7ec;
+  --surface-stamp-off: #f1f1f4;
+  /* Task card surfaces — pure white. Color sits in the icon badge only. */
+  --surface-card-click: #ffffff;
+  --surface-card-posting: #ffffff;
+  --surface-card-bonus: #fffaf0;
+  --surface-card-auto: #ffffff;
   --surface-chip: #fff0d6;
-  --surface-chip-cool: #eaf2ff;
-  --surface-promo-violet: #6c47e0;
-  --surface-promo-mint: #1fb1a1;
-  --surface-promo-coral: #ff6b3d;
+  --surface-chip-cool: #f1f1f4;
+  /* Promo surfaces — coral + dark navy only */
+  --surface-promo-primary: #ff6b3d;
+  --surface-promo-dark: #1c1f24;
+  --surface-promo-warm: #ffb020;
   --surface-new: #1c1f24;
-  --surface-rank: #fff8ef;
-  --surface-divider: #f0e6dc;
+  --surface-rank: #ffffff;
+  --surface-divider: #ececef;
   --surface-bar: #ffffff;
   --surface-medal-gold: #ffc24a;
   --surface-medal-silver: #c9ccd2;
@@ -97,8 +106,10 @@
   --transition-fast: 120ms var(--ease-out);
   --transition-snap: 200ms var(--ease-spring);
 
-  /* Shadow */
-  --shadow-card: 0 4px 18px rgba(255, 74, 22, 0.08);
-  --shadow-hero: 0 10px 30px rgba(255, 74, 22, 0.28);
-  --shadow-nav: 0 -4px 24px rgba(26, 29, 34, 0.06);
+  /* Shadow — sparingly. focal anchors only (hero, action, frame).
+     카드들은 border로 정의, 그림자 X. monotone & sharp. */
+  --shadow-card: 0 1px 0 rgba(26, 29, 34, 0.04);
+  --shadow-hero: 0 6px 18px rgba(255, 74, 22, 0.22);
+  --shadow-nav: 0 -1px 0 var(--surface-divider);
+  --shadow-action: 0 6px 14px rgba(255, 74, 22, 0.35);
 }

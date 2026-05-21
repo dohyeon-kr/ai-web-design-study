@@ -4,11 +4,12 @@
   height: calc(100dvh - var(--space-md) * 2);
   background: var(--surface-app);
   border-radius: var(--radius-card);
-  box-shadow: 0 24px 60px rgba(255, 74, 22, 0.18);
+  box-shadow: 0 8px 32px rgba(26, 29, 34, 0.08);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
+  border: 1px solid var(--surface-divider);
 }
 
 .scroll {

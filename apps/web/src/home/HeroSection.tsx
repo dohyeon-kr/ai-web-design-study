@@ -53,6 +53,14 @@ export default function HeroSection() {
   return (
     <>
       <section className={styles.hero} aria-label="오늘의 포인트">
+        <img
+          src={`${import.meta.env.BASE_URL}images/hero-coin.png`}
+          alt=""
+          className={styles.heroCoin}
+          width="124"
+          height="124"
+          aria-hidden
+        />
         <div className={styles.topRow}>
           <p className={styles.greeting}>도현님, 오늘도 화이팅!</p>
           <GuideButton />

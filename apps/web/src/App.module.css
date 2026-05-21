@@ -1,6 +1,6 @@
 .page {
   min-height: 100dvh;
-  background: linear-gradient(180deg, #fff4ec 0%, #ffe7d3 60%, #ffd8b8 100%);
+  background: var(--surface-page);
   display: flex;
   justify-content: center;
   padding: var(--space-md) var(--space-sm);

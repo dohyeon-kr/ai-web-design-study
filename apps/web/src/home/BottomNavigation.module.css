@@ -54,19 +54,19 @@
   width: 56px;
   height: 56px;
   border-radius: var(--radius-circle);
-  background: linear-gradient(135deg, #ff8a52 0%, #ff4a16 100%);
+  background: var(--surface-hero);
   color: var(--text-on-hero);
   display: grid;
   place-items: center;
-  box-shadow: 0 8px 20px rgba(255, 74, 22, 0.45);
+  box-shadow: var(--shadow-action);
   font-size: 22px;
   font-weight: var(--font-weight-bold);
-  transition: transform var(--transition-snap), box-shadow var(--transition-fast);
+  transition: transform var(--transition-snap), background var(--transition-fast);
 }
 
 .actionBtn:hover {
-  transform: scale(1.06);
-  box-shadow: 0 10px 28px rgba(255, 74, 22, 0.55);
+  transform: scale(1.04);
+  background: var(--surface-hero-deep);
 }
 
 .actionBtn:active {

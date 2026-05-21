@@ -6,7 +6,8 @@ describe('App', () => {
   it('홈 화면의 브랜드명과 포인트 카운터를 렌더링한다', () => {
     render(<App />);
     expect(screen.getByText(/포인트팡/)).toBeInTheDocument();
-    expect(screen.getByText(/2,480/)).toBeInTheDocument();
+    const hero = screen.getByLabelText('오늘의 포인트');
+    expect(hero).toHaveTextContent('2,480');
   });
 
   it('네 가지 미션 카드를 렌더링한다', () => {

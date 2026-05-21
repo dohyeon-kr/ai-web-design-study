@@ -2,7 +2,7 @@
   margin: 0 var(--space-md);
   border-radius: var(--radius-card);
   background:
-    radial-gradient(circle at 100% 0%, #ffb020 0%, transparent 55%),
+    radial-gradient(circle at 100% 0%, #ff8a52 0%, transparent 55%),
     linear-gradient(180deg, var(--surface-hero) 0%, var(--surface-hero-deep) 100%);
   color: var(--text-on-hero);
   padding: var(--space-lg) var(--space-lg) var(--space-md);
@@ -26,6 +26,37 @@
   pointer-events: none;
 }
 
+.heroCoin {
+  position: absolute;
+  top: 8px;
+  right: -12px;
+  width: 124px;
+  height: 124px;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 8px 16px rgba(166, 36, 7, 0.32));
+  animation: heroCoinFloat 4.4s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes heroCoinFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(2deg);
+  }
+}
+
+.topRow,
+.pointBlock,
+.subText,
+.progressBar,
+.actionRow {
+  position: relative;
+  z-index: 1;
+}
+
 .topRow {
   display: flex;
   justify-content: space-between;
@@ -34,21 +65,21 @@
 
 .greeting {
   font-size: var(--font-size-sm);
-  opacity: 0.85;
   margin: 0;
+  font-weight: var(--font-weight-medium);
+  color: #fff;
 }
 
 .guideBtn {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
-  background: rgba(255, 255, 255, 0.18);
-  color: var(--text-on-hero);
-  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--surface-hero-deep);
+  padding: 6px 12px;
   border-radius: var(--radius-pill);
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  backdrop-filter: blur(8px);
+  font-weight: var(--font-weight-bold);
 }
 
 .pointBlock {
@@ -69,13 +100,13 @@
 .pointUnit {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  opacity: 0.92;
 }
 
 .subText {
   font-size: var(--font-size-sm);
-  opacity: 0.85;
   margin: 0;
+  color: #fff;
+  font-weight: var(--font-weight-medium);
 }
 
 .subText strong {
@@ -159,16 +190,17 @@
 }
 
 .cashOut:hover {
-  box-shadow: 0 6px 14px rgba(255, 255, 255, 0.45);
+  background: #ffe7d3;
 }
 
 .history {
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.18);
-  color: var(--text-on-hero);
-  font-weight: var(--font-weight-medium);
+  color: #fff;
+  font-weight: var(--font-weight-bold);
   font-size: var(--font-size-sm);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 /* Stamp Banner */
@@ -177,13 +209,12 @@
   background: var(--surface-app);
   border-radius: var(--radius-card);
   padding: var(--space-md);
-  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   position: relative;
   z-index: 2;
-  border: 1px solid var(--border-card);
+  border: 1px solid var(--surface-divider);
 }
 
 .stampHead {
