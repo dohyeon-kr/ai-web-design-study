@@ -20,7 +20,7 @@
   gap: var(--space-xs);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
-  letter-spacing: 0.12em;
+  letter-spacing: var(--letter-spacing-caps);
   text-transform: uppercase;
   color: var(--accent-brand-strong);
 }
@@ -38,7 +38,7 @@
   line-height: var(--line-height-tight);
   color: var(--text-strong);
   font-weight: var(--font-weight-bold);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--letter-spacing-tight);
 }
 
 .sectionLede {
@@ -55,7 +55,11 @@
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: var(--space-3xl);
-  align-items: stretch;
+  align-items: start;
+}
+
+.hero > * {
+  min-width: 0;
 }
 
 .heroCopy {
@@ -70,7 +74,7 @@
   line-height: var(--line-height-tight);
   color: var(--text-strong);
   font-weight: var(--font-weight-bold);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--letter-spacing-display);
 }
 
 .heroTitleAccent {
@@ -130,13 +134,15 @@
   flex-direction: column;
   gap: var(--space-md);
   box-shadow: var(--shadow-elevated);
+  /* 컨텐츠가 짧아서 hero copy 높이에 끌려가지 않도록 자기 크기로 고정 */
+  align-self: start;
 }
 
 .heroCardLabel {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--letter-spacing-caps);
   color: var(--accent-brand-strong);
 }
 
@@ -186,7 +192,7 @@
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--letter-spacing-caps);
   padding: var(--space-2xs) var(--space-sm);
   border-radius: var(--radius-pill);
 }
@@ -273,7 +279,7 @@
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--letter-spacing-caps);
   color: var(--text-subtle);
 }
 
@@ -295,7 +301,7 @@
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--letter-spacing-caps);
   padding: var(--space-2xs) var(--space-sm);
   border-radius: var(--radius-pill);
 }
@@ -322,6 +328,14 @@
   grid-template-columns: 1.05fr 1fr;
   gap: var(--space-xl);
   align-items: start;
+}
+
+/* Grid item이 자기 콘텐츠(긴 코드 블록·텍스트)에 끌려 viewport를 넘지 않도록 */
+.skillLayout > *,
+.riskGrid > *,
+.conclusion > *,
+.skillCardsGrid > * {
+  min-width: 0;
 }
 
 .skillSteps {
@@ -397,7 +411,7 @@
   font-size: var(--font-size-xs);
   color: var(--code-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--letter-spacing-caps);
   margin-bottom: var(--space-md);
   display: flex;
   align-items: center;
@@ -511,7 +525,7 @@
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--letter-spacing-caps);
   color: var(--text-subtle);
 }
 
@@ -634,7 +648,7 @@
 .calloutLabel {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
-  letter-spacing: 0.12em;
+  letter-spacing: var(--letter-spacing-caps);
   text-transform: uppercase;
   color: var(--code-text-accent);
 }
@@ -655,10 +669,16 @@
 
 /* ─── Responsive ──────────────────────────────────────── */
 
+/* skillLayout는 한 컬럼이 긴 코드 블록을 들고 있어서 더 일찍 stack */
+@media (max-width: 1024px) {
+  .skillLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 900px) {
   .hero,
   .riskGrid,
-  .skillLayout,
   .conclusion,
   .skillCardsGrid {
     grid-template-columns: 1fr;

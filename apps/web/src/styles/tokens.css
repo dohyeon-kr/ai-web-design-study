@@ -57,31 +57,45 @@
   --radius-code: 12px;
 
   /* ─── Type ────────────────────────────────────────────── */
-  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "SF Pro Display", system-ui,
-    sans-serif;
+  /* 본문은 한글 위주이므로 Pretendard Variable을 1순위로. 라틴 폴백은 system 우선.
+   * Pretendard는 dynamic-subset CDN으로 index.html에서 preload. */
+  --font-family-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, "Apple SD Gothic Neo", "Malgun Gothic", "Helvetica Neue", Arial, sans-serif;
   --font-family-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Type scale — research-article typography (Stripe / Linear / Smashing 패턴 참고)
-   * 한 단계씩 위로 올려 위계 contrast 확보. body 17px / lede 20px / section 44px / hero 60px. */
+  /* Type scale — 한국어 본문 + 영문 헤딩 혼용 기준.
+   * 한글 자형이 라틴 대비 시각 면적이 크므로 영문 article 권장치(16~19px)보다
+   * 한 단계 작아도 충분하나, 위계 contrast를 위해 body 17px 유지.
+   * 4xl/5xl 한글 hero는 자모 충돌 방지를 위해 line-height-tight를 약간 늘려 보완. */
   --font-size-xs: 12px;
   --font-size-sm: 14px;
-  --font-size-md: 17px;       /* body */
-  --font-size-lg: 20px;       /* lede / sub */
+  --font-size-md: 17px; /* body — 토스·당근·우아한형제들 등 한국 디자인 블로그 표준 */
+  --font-size-lg: 20px; /* lede / sub */
   --font-size-xl: 24px;
   --font-size-2xl: 32px;
-  --font-size-3xl: 44px;      /* section heading */
-  --font-size-4xl: 60px;      /* hero */
-  --font-size-5xl: 76px;      /* display (대형 viewport hero) */
+  --font-size-3xl: 44px; /* section heading */
+  --font-size-4xl: 56px; /* hero — 한글 자모 가시성 위해 영문권 60px 대비 약간 축소 */
+  --font-size-5xl: 72px; /* display (대형 viewport hero) */
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Tighter for display, looser for body — design-article 패턴 */
-  --line-height-tight: 1.05;
-  --line-height-snug: 1.25;
-  --line-height-relaxed: 1.65;
+  /* Line-height — 한글 행간은 라틴보다 +0.1 더 여유.
+   * tight: 큰 헤딩에서도 한글 자모(받침) 충돌 방지 위해 1.0 미만 금지.
+   * relaxed: 한글 본문은 1.7±가 가장 가독성 좋음 (한글 디자인 블로그 컨센서스). */
+  --line-height-tight: 1.18; /* 큰 헤딩 — 한글 받침 안전치 */
+  --line-height-snug: 1.4; /* 카드 제목·짧은 문장 */
+  --line-height-relaxed: 1.75; /* 본문 prose — 한글 기준 권장치 */
+
+  /* Letter-spacing — 한글은 자모가 응집할 때 더 정돈된 인상을 줘서 살짝 음수가 자연스럽다.
+   * 영문 caps 헤딩(SECTION 01 같은)은 양수 tracking이 표준이라 별도 토큰. */
+  --letter-spacing-display: -0.025em; /* hero / 대형 헤딩 */
+  --letter-spacing-tight: -0.015em; /* section heading / 중간 헤딩 */
+  --letter-spacing-snug: -0.01em; /* body — 한글 기준 미세 조이기 */
+  --letter-spacing-normal: 0; /* 작은 텍스트는 0이 더 가독 */
+  --letter-spacing-caps: 0.12em; /* eyebrow / 영문 small caps 트래킹 */
 
   /* ─── Layout ──────────────────────────────────────────── */
   /* body 17px 기준 약 65~70 char 줄당 — readability optimum */
