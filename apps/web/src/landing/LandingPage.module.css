@@ -198,14 +198,16 @@
   gap: var(--space-md);
 }
 
+/* 두 카드는 정보 균형 — '맡길 수 있는 영역'을 약화시키지 않도록 동등한 visual weight.
+ * 좌측 2px 컬러 스트라이프만 status hue 차이로. */
 .riskCardSafe {
   border-color: var(--border-strong);
+  box-shadow: inset 2px 0 0 var(--accent-positive);
 }
 
 .riskCardDanger {
-  border-color: var(--text-strong);
-  border-width: 1px;
-  box-shadow: inset 3px 0 0 var(--text-strong);
+  border-color: var(--border-strong);
+  box-shadow: inset 2px 0 0 var(--accent-warning);
 }
 
 .riskBadge {
@@ -218,14 +220,11 @@
   border-radius: var(--radius-pill);
 }
 
-.riskBadgeSafe {
-  background: var(--surface-muted);
-  color: var(--text-muted);
-}
-
+/* 배지도 동등 — 라벨 텍스트로 의미 구분, 색 weight 차이는 좌측 스트라이프가 담당 */
+.riskBadgeSafe,
 .riskBadgeDanger {
-  background: var(--text-strong);
-  color: var(--text-on-dark);
+  background: var(--surface-muted);
+  color: var(--text-default);
 }
 
 .riskTitle {
@@ -264,11 +263,11 @@
 }
 
 .riskCardSafe .riskList li::before {
-  background: var(--text-muted);
+  background: var(--accent-positive);
 }
 
 .riskCardDanger .riskList li::before {
-  background: var(--text-strong);
+  background: var(--accent-warning);
 }
 
 /* ─── Token ladder ────────────────────────────────────── */
