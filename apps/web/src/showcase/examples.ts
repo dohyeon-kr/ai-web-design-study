@@ -25,10 +25,12 @@ export const EXAMPLES: ExampleSlot[] = [
   {
     slug: 'select-shop',
     label: 'Select Shop',
-    tagline: '편집샵 컨셉 — 준비 중',
-    description: '컴포넌트 contract 위주로 다시 설계해보는 두 번째 실험. 곧 공개됩니다.',
-    status: 'soon',
+    tagline: 'Quiet Tailoring — 다크 톤 편집샵',
+    description:
+      '에디토리얼 매거진 흐름으로 설계한 두 번째 실험. 잉크/페이퍼 톤 + 사진 카드 + 큰 타이포로 Fruit Shop과 대조되는 디자인 언어를 보여줍니다.',
+    status: 'live',
     branch: 'feature/select-shop-ui',
+    embedPath: 'showcases/select-shop/',
   },
   {
     slug: 'slot-3',

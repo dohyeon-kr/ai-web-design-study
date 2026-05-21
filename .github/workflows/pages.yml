@@ -56,6 +56,7 @@ jobs:
           set -euo pipefail
           entries=(
             "fruit-shop:feature/fruit-shop-ui"
+            "select-shop:feature/select-shop-ui"
           )
           for entry in "${entries[@]}"; do
             slug="${entry%%:*}"
