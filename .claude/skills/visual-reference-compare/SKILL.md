@@ -148,8 +148,12 @@ If the viewport renders too small to inspect details, increase the browser zoom 
 
 ## 6. Related skills
 
-- **image-asset-strategy** — if a comparison reveals an asset is missing or visibly fake, route the gap back to this skill.
-- **css-judgment** — when differences are found, diagnose root cause via sizing ownership / box model / token hierarchy / etc.
+- **image-asset-strategy** — if a comparison reveals an asset is missing, visibly fake (raw-SVG face / hand-drawn custom icon), or off-tone vs the reference, route the gap back to this skill. The default action there is **delegate the re-spin to Codex via `/codex:rescue`** (batched if multiple slots need rework) — not patch the SVG by hand.
+- **css-judgment** — when differences are found in layout / spacing / sizing, diagnose root cause via sizing ownership / box model / token hierarchy / etc.
+
+### When the punch list contains asset items
+
+If the §2 Step 4 report contains `⚠️` / `❌` lines for assets ("avatar looks like a stylized placeholder, not a photo", "nav icons are monotone but reference is duotone peach"), bundle every asset-related item into a single `/codex:rescue` re-spin rather than patching one at a time. Codex regenerating the asset set as a batch keeps visual coherence higher than serial fixes.
 
 ---
 

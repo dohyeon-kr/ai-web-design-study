@@ -26,9 +26,11 @@ If any answer is "I don't know," stop and **read** the code before writing.
 
 ### Pre-flight: image-asset-strategy gate (must pass before CSS work)
 
-If the task started from a **design reference image / mockup / Figma URL** and that reference contains any photographic or composite visual asset (human face, model figure, product photo, hero shot, editorial visual, 3D-rendered cluster, illustration, brand mark), **stop and run `image-asset-strategy` first**. Do not begin writing layout / styling code, and especially do not type `<svg>` for any of those slots, before the asset catalog has been produced and the routing decision (imagegen vs placeholder) is made.
+If the task started from a **design reference image / mockup / Figma URL** and that reference contains any photographic or composite visual asset — human face, model figure, product photo, hero shot, editorial visual, 3D-rendered cluster, illustration, brand mark, **or a custom-styled icon set** — **stop and run `image-asset-strategy` first**. Do not begin writing layout / styling code, and especially do not type `<svg>` for any of those slots, before the asset catalog has been produced and the routing decision is made.
 
-If you find yourself already drawing a face with `<circle>` + `<path>`, or mocking a product photo with stacked SVG shapes — that's a sign this gate was skipped. Stop, revert that draft, and run `image-asset-strategy` now.
+The default routing decision for assets is **delegate to Codex via `/codex:rescue`** (Codex owns `imagegen`). Placeholders are a fallback that must carry an explicit reason in the final report. Don't pre-emptively reach for the placeholder while you're still in the CSS skill.
+
+If you find yourself already drawing a face with `<circle>` + `<path>`, or mocking a product photo with stacked SVG shapes, or replicating a custom icon style by hand — that's a sign this gate was skipped. Stop, revert that draft, and run `image-asset-strategy` now.
 
 ### Sizing ownership (first CSS question)
 
@@ -72,7 +74,7 @@ Failing to make this decision leads to bugs like "fixed 48px child collides with
 3. **State intent when changing layout properties** — `display` / `position` / `overflow` / `z-index` only when you can name the intent in one sentence.
 4. **Fill properties are a patch signal** — find the real cause before stamping `width: 100%`, `flex: 1`, or `height: 100%`. The #1 cause of flex items refusing to shrink is a missing `min-width: 0`.
 5. **Preserve the box model** — declared `padding` / `border` / `margin` must remain. When child total size exceeds container inner width, padding gets visually consumed. Don't shrink children to fit; **redesign with relative distribution** (flex:1 / grid 1fr).
-6. **Don't fake photographic assets with raw SVG** — faces/photos/composite illustrations drawn from circles and paths become awkward placeholders. Asset decisions go to **image-asset-strategy** (delegate to imagegen, or placeholder + report). Simple UI icons (search, home, menu) as inline SVG are fine.
+6. **Don't fake photographic assets or custom-styled icons with raw SVG** — faces/photos/composite illustrations/custom icon families drawn from circles and paths become awkward placeholders. Asset decisions go to **image-asset-strategy**, whose default route is **delegate to Codex via `/codex:rescue`** (Codex owns the `imagegen` pipeline). Only canonical trivial UI glyphs (search, home, menu, chevron, well-known social logos) stay as inline SVG.
 7. **Report system-level problems** — repeated patterns, missing semantics, one-context-only components: don't keep stamping CSS, propose a token/variant/contract addition.
 8. **CSS unit hierarchy** — `rem` for text and UI density, `px` for visual crispness, `%`/`vw`/`vh`/`fr` for layout proportions, `em` for spacing that should scale with the component's own font size. Don't unify everything in rem or everything in px.
    - **rem**: `font-size`, `line-height`, `padding`, `margin`, `gap`, `border-radius`. Respects users who change the browser default font size (accessibility).
@@ -84,7 +86,7 @@ Failing to make this decision leads to bugs like "fixed 48px child collides with
 
 ## 3. Anti-patterns (stop on sight)
 
-- ❌ **Faking a photographic asset with raw SVG primitives** — `<svg>` `<circle>` `<rect>` `<path>` arrangements to stand in for a **human face / model figure / product photo / hero image / editorial moodshot / 3D object cluster / illustration / brand mark**. Route to `image-asset-strategy`. This anti-pattern is the most frequent cause of session restarts in UI work; do not even draft "a quick SVG version for now."
+- ❌ **Faking a photographic asset or custom icon with raw SVG primitives** — `<svg>` `<circle>` `<rect>` `<path>` arrangements to stand in for a **human face / model figure / product photo / hero image / editorial moodshot / 3D object cluster / illustration / brand mark / custom-styled icon set**. Route to `image-asset-strategy` → Codex via `/codex:rescue`. This anti-pattern is the most frequent cause of session restarts in UI work; do not even draft "a quick SVG version for now."
 - ❌ Child `margin-bottom` / `margin-right` for sibling spacing (`margin: auto` for fine push and **bleed pattern** — `margin: 0 calc(var(--space-md) * -1)` to break parent padding for a full-bleed row — are the named exceptions; large-area distribution still belongs in the parent)
 - ❌ Arbitrary px (`padding: 7px`, `width: 250px`, `top: -22px`) — raw px scattered without semantic tokens
 - ❌ One-off primitive token combinations (`var(--space-3) var(--space-5)`)
@@ -194,7 +196,15 @@ The flex item's default `min-width: auto` blocks shrinking — that's the real c
 
 **Bad**: `<svg>` with `<circle>` + `<path>` mimicking a face → an awkward placeholder.
 
-**Good**: route through **image-asset-strategy**. In the codex environment, invoke `imagegen` directly for the asset; outside it, drop a placeholder and report the gap.
+**Good**: route through **image-asset-strategy**. From Claude Code, **delegate to Codex via `/codex:rescue`** (Codex owns `imagegen` and will produce + wire the asset). From inside Codex, invoke `imagegen` directly. Placeholder + report only if Codex routing is genuinely blocked (user veto, unauthenticated setup) — and surface the reason explicitly.
+
+### Example 7 — Custom-styled icon set
+
+A nav has 5 icons in a duotone peach/coral style that matches the design's brand language.
+
+**Bad**: hand-drawing each icon with `<path d="...">` from memory, trying to approximate the duotone effect with two stacked `<path>` elements per icon.
+
+**Good**: catalog all 5 icons in `image-asset-strategy` as a single asset slot ("custom nav icon set, 24x24, duotone peach/coral, matching reference style"), then batch-delegate to Codex via one `/codex:rescue` call. The set will be coherent because it was generated together; piecemeal hand-drawing tends to drift between icons.
 
 ---
 
