@@ -305,6 +305,9 @@ function SkillStructure() {
   );
 }
 
+const SKILL_REPO_BASE =
+  'https://github.com/dohyeon-kr/ai-web-design-study/blob/main/.claude/skills';
+
 function SkillsInUse() {
   const skills = [
     {
@@ -318,6 +321,7 @@ function SkillsInUse() {
         'primitive token 직접 사용',
       ],
       pillars: ['Layout responsibility', 'Design language', 'Blast radius'],
+      docHref: `${SKILL_REPO_BASE}/css-judgment/SKILL.md`,
     },
     {
       id: 'image-asset-strategy',
@@ -330,6 +334,7 @@ function SkillsInUse() {
         'editorial / 3D-rendered visual',
       ],
       pillars: ['Catalog first', 'Route to imagegen', 'Inline SVG는 UI 아이콘만'],
+      docHref: `${SKILL_REPO_BASE}/image-asset-strategy/SKILL.md`,
     },
     {
       id: 'visual-reference-compare',
@@ -342,6 +347,7 @@ function SkillsInUse() {
         '"비율이 달라 보여"',
       ],
       pillars: ['Capture viewport', 'Measure, not eyeball', 'Punch list로 차이 보고'],
+      docHref: `${SKILL_REPO_BASE}/visual-reference-compare/SKILL.md`,
     },
   ];
 
@@ -385,6 +391,15 @@ function SkillsInUse() {
                 </ul>
               </div>
             </dl>
+            <a
+              className={styles.skillCardLink}
+              href={skill.docHref}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>SKILL.md 확인하기</span>
+              <span aria-hidden>↗</span>
+            </a>
           </article>
         ))}
       </div>

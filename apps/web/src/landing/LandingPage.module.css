@@ -543,6 +543,29 @@
   background: var(--border-strong);
 }
 
+.skillCardLink {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--text-strong);
+  background: var(--surface-muted);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.skillCardLink:hover {
+  background: var(--surface-ink);
+  color: var(--text-on-dark);
+}
+
 /* ─── Conclusion ──────────────────────────────────────── */
 
 .conclusion {
