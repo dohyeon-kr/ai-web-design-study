@@ -99,6 +99,39 @@ When multiple assets are needed in one task, **batch them into a single `/codex:
 - Re-run lint / build / tests to confirm the wiring.
 - Report which assets were added and where, and which (if any) need a re-spin.
 
+### 2.3-A Detect Codex `imagegen` → rasterizer fallback (re-spin signal)
+
+Codex can silently fall back to a self-contained Python / Node pixel rasterizer when the real `imagegen` toolchain (canvas, sharp, jimp, pngjs) is unavailable in its environment. The job "succeeds" and writes files, but the output is **simple SVG-like geometric shapes** rather than a photographic / illustrative asset.
+
+Detection signals (any one is enough):
+- File size unusually small for the requested aspect (a 1920×1200 "moodshot" coming back at 30KB)
+- Visual inspection shows raw rectangles / circles / single-color fills / hard-edged primitives — not a photograph or rendered illustration
+- Codex's own summary mentions "self-contained rasterizer," "canvas/sharp/jimp/pngjs unavailable," "raw PNG rasterizer" — these phrases are confessions of fallback
+- A `scripts/generate-*.mjs` file appears at repo root that hand-draws shapes — that's the fallback path leaving evidence
+
+Recovery: re-invoke `/codex:rescue` and **explicitly require the `imagegen` skill**:
+
+```
+/codex:rescue Use the `imagegen` skill explicitly to generate real images for the slots below ...
+```
+
+This single sentence usually flips Codex away from the rasterizer fallback.
+
+### 2.3-B `--write` permission workaround (`/tmp` indirection)
+
+Codex sometimes cannot write directly to the project tree (sandbox / permission), and the job fails or returns "couldn't write." Workaround:
+
+1. Have Codex output to `/tmp/<asset>.png` (an always-writable path)
+2. Claude / the user then `cp /tmp/<asset>.png <project>/public/...` after Codex returns
+
+Prompt addendum:
+```
+If you cannot write to <project>/apps/web/public/images/, output to /tmp/
+with the same filenames and report the /tmp paths — Claude will move them.
+```
+
+Use this only when the direct path fails; default route is direct write.
+
 ### 2.4 When Codex delegation is genuinely blocked
 
 Only the following are valid reasons to skip Codex and go to §3 placeholders:

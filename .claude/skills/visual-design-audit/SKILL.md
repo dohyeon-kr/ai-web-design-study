@@ -139,6 +139,25 @@ Check:
 - Interactive elements visually distinct from static ones?
 - Does color encode meaning (status, action) consistently?
 
+Quick in-page contrast probe (run in console / cmux eval — no DevTools needed):
+
+```js
+function relLum(hex) {
+  const r = parseInt(hex.slice(1, 3), 16) / 255;
+  const g = parseInt(hex.slice(3, 5), 16) / 255;
+  const b = parseInt(hex.slice(5, 7), 16) / 255;
+  const t = (c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * t(r) + 0.7152 * t(g) + 0.0722 * t(b);
+}
+function ratio(fgHex, bgHex) {
+  const a = relLum(fgHex), b = relLum(bgHex);
+  return ((Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)).toFixed(2);
+}
+// Example: ratio('#5e6470', '#f6f4ef') → "5.83" (passes AA body)
+```
+
+Flag any text where measured ratio < required threshold and route to `css-judgment` for a token-level fix (not a one-off color override at the call site).
+
 Bad signals:
 - 14px gray-on-gray text "for elegance" — fails AA
 - Brand color used for everything (buttons, links, dividers, icons) — semantics dilute
@@ -380,9 +399,20 @@ Bad signals:
 Patterns to add (light, default these in):
 ```css
 .interactiveCard {
-  transition: transform 0.12s ease, background-color 0.12s ease, border-color 0.12s ease;
+  border: 1px solid var(--border-card);
+  transition:
+    transform 0.12s ease,
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    border-width 0.12s ease;
 }
-.interactiveCard:hover  { background-color: var(--surface-hover); }
+.interactiveCard:hover {
+  background-color: var(--surface-hover);
+  /* Hover border 강화: 두꺼워지고 theme color로 — 카드가 '집어지는' 느낌 */
+  border: 2px solid var(--accent-brand);
+  /* 두께가 1→2px로 늘면 1px만큼 contents가 밀려나므로 padding을 1px 줄여 보정 */
+  padding: calc(var(--space-md) - 1px);
+}
 .interactiveCard:active { transform: scale(0.98); }
 .interactiveCard:focus-visible { outline: 2px solid var(--accent-focus); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
@@ -390,6 +420,12 @@ Patterns to add (light, default these in):
   .interactiveCard:active { transform: none; }
 }
 ```
+
+Hover의 visual weight 변화는 두 가지 같이 가야 자연스럽다:
+- **color shift**(미세한 배경 톤 변화)
+- **border 강화**(두께 +1px + theme accent color)
+
+color shift만 있으면 평평하고, border만 두꺼워지면 보더가 갑자기 튀어나온다. 둘이 동시에 변할 때 카드가 "들려" 보인다.
 
 ### 5.8 Empty / error / edge states — *NN/g #9*
 
