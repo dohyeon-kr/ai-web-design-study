@@ -798,4 +798,27 @@
   .sectionHeading {
     font-size: var(--font-size-2xl);
   }
+
+  .heroActions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-sm);
+  }
+
+  .btnPrimary,
+  .btnGhost {
+    width: 100%;
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--font-size-md);
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .skillCardLink {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-sm);
+    min-height: 40px;
+  }
 }

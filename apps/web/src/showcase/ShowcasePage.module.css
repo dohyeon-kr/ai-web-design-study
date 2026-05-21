@@ -272,15 +272,48 @@
 /* ─── Responsive ──────────────────────────────────────── */
 
 @media (max-width: 720px) {
+  .tabs {
+    align-self: stretch;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    flex-shrink: 0;
+    padding: var(--space-sm) var(--space-md);
+    min-height: 40px;
+  }
+
   .slotMeta {
     grid-template-columns: 1fr;
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .frame {
+    margin-left: calc(var(--space-xl) * -1);
+    margin-right: calc(var(--space-xl) * -1);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .frameToolbar {
+    display: none;
   }
 
   .frameStage {
-    min-height: 560px;
+    min-height: calc(100vh - 200px);
+    border-radius: 0;
   }
 
   .iframe {
-    height: 560px;
+    height: calc(100vh - 200px);
   }
 }

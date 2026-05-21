@@ -92,6 +92,9 @@
   }
 
   .navItem {
-    padding: var(--space-xs) var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
   }
 }
