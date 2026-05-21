@@ -465,6 +465,43 @@
 
 /* ─── Skills in use ───────────────────────────────────── */
 
+.skillsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding-top: var(--space-md);
+}
+
+.skillsGroupHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px dashed var(--border-strong);
+}
+
+.skillsGroupTag {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.skillsGroupLabel {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-strong);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.skillsGroupCaption {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--font-size-md);
+}
+
 .skillCardsGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

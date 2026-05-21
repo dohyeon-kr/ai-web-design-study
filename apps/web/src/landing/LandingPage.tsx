@@ -332,46 +332,114 @@ function SkillStructure() {
 const SKILL_REPO_BASE =
   'https://github.com/dohyeon-kr/ai-web-design-study/blob/main/.claude/skills';
 
+type SkillGroup = {
+  label: string;
+  caption: string;
+  skills: {
+    id: string;
+    headline: string;
+    summary: string;
+    triggers: string[];
+    pillars: string[];
+    docHref: string;
+  }[];
+};
+
 function SkillsInUse() {
-  const skills = [
+  const groups: SkillGroup[] = [
     {
-      id: 'css-judgment',
-      headline: 'CSS work 판단',
-      summary:
-        'CSS는 속성 조합이 아니라 책임·언어·범위의 설계다. padding/margin/gap부터 z-index/overflow, 토큰 직접 사용까지 — 작업 직전에 세 가지 렌즈로 판단을 강제한다.',
-      triggers: [
-        'padding · margin · gap · 사이징',
-        'z-index · overflow · position',
-        'primitive token 직접 사용',
+      label: 'Guide — 작업을 시작·진행할 때',
+      caption: '판단의 기준과 어휘를 작업 직전에 주입',
+      skills: [
+        {
+          id: 'css-judgment',
+          headline: 'CSS work 판단',
+          summary:
+            'CSS는 속성 조합이 아니라 책임·언어·범위의 설계. padding/gap부터 z-index/overflow, 토큰 직접 사용까지 — 작업 직전에 세 가지 렌즈로 판단을 강제한다.',
+          triggers: [
+            'padding · margin · gap · 사이징',
+            'z-index · overflow · sticky · position',
+            'primitive token 직접 사용',
+          ],
+          pillars: ['Layout responsibility', 'Design language', 'Blast radius'],
+          docHref: `${SKILL_REPO_BASE}/css-judgment/SKILL.md`,
+        },
+        {
+          id: 'image-asset-strategy',
+          headline: 'UI 시작 전 자산 카탈로그',
+          summary:
+            'UI 작업이 reference 이미지에서 시작하면 SVG로 사진을 흉내내는 충동이 먼저 나온다. 자산 슬롯을 먼저 카탈로그하고 Codex의 imagegen으로 라우팅한다.',
+          triggers: [
+            'design reference / mockup / Figma URL',
+            'human · model · product · hero photo',
+            'editorial / 3D-rendered visual',
+          ],
+          pillars: ['Catalog first', 'Route to /codex:rescue', 'Inline SVG는 UI 아이콘만'],
+          docHref: `${SKILL_REPO_BASE}/image-asset-strategy/SKILL.md`,
+        },
+        {
+          id: 'korean-typography',
+          headline: '한글 본문 typography 표준',
+          summary:
+            'Stripe / Linear / Smashing 같은 영문 디자인 article의 type scale을 그대로 가져오면 한글에선 작고 답답해진다. Pretendard + line-height 1.7± + word-break:keep-all 등 한글 기준 7개 self-question.',
+          triggers: [
+            '본문이 한글 위주인 페이지',
+            '"글자가 작아 / 행간이 답답해 / 끝 정렬 어색해"',
+            'font-family / 토큰 / wrap 규칙 설계',
+          ],
+          pillars: ['Pretendard 1순위 폰트 스택', 'line-height 1.7±', 'word-break: keep-all'],
+          docHref: `${SKILL_REPO_BASE}/korean-typography/SKILL.md`,
+        },
       ],
-      pillars: ['Layout responsibility', 'Design language', 'Blast radius'],
-      docHref: `${SKILL_REPO_BASE}/css-judgment/SKILL.md`,
     },
     {
-      id: 'image-asset-strategy',
-      headline: 'UI 시작 전 자산 카탈로그',
-      summary:
-        'UI 작업이 reference 이미지에서 시작하면 SVG로 사진을 흉내내는 충동이 가장 먼저 튀어나온다. 그 충동을 막기 위해 자산 슬롯을 먼저 카탈로그하고 imagegen으로 라우팅한다.',
-      triggers: [
-        'design reference / mockup / Figma URL',
-        'human · model · product · hero photo',
-        'editorial / 3D-rendered visual',
+      label: 'Verification — 끝나기 직전·끝난 직후',
+      caption: '"빌드 통과 / 테스트 통과"는 디자인 검증이 아니다',
+      skills: [
+        {
+          id: 'visual-design-audit',
+          headline: '심미성 + 유저편의성 16-lens audit',
+          summary:
+            'Reference가 없어도 디자인 자체가 올바른지 audit. Refactoring UI / NN/g 10 Heuristics / WCAG / Apple HIG / 8pt grid / modular scale 등 정전을 16개 lens로 압축. 측정 우선, eyeball 금지. 마지막에 self-critique 강제.',
+          triggers: [
+            '작업 끝 / "report complete" 직전',
+            '"디자인 어때 / 괜찮아 보여 / 검토해줘"',
+            '토큰·테마 변경 후 시각 점검',
+          ],
+          pillars: ['심미성 8 lens', '유저 편의성 8 lens', 'Self-critique loop 강제'],
+          docHref: `${SKILL_REPO_BASE}/visual-design-audit/SKILL.md`,
+        },
+        {
+          id: 'visual-regression-guard',
+          headline: 'before/after diff로 회귀 방지',
+          summary:
+            '토큰·테마·공통 컴포넌트 변경은 보지 않는 화면에서 깨진다. 변경 전에 baseline 캡처 → 후에 재캡처 → diff. 회귀 발견 시 4-step recovery (locate → hypothesize → bisect → route).',
+          triggers: [
+            'design token / theme / shared CSS 변경',
+            '공통 컴포넌트 / breakpoint / 외부 폰트 CDN 변경',
+            '"다른 페이지에 영향 없는지 확인해"',
+          ],
+          pillars: [
+            'Phase 1: baseline 캡처',
+            'Phase 2: diff + classify',
+            'Recovery 4-step + route',
+          ],
+          docHref: `${SKILL_REPO_BASE}/visual-regression-guard/SKILL.md`,
+        },
+        {
+          id: 'visual-reference-compare',
+          headline: 'reference image와 측정 비교',
+          summary:
+            '외부 reference(목업·Figma URL)가 주어진 작업에선 렌더된 viewport와 reference를 비율·여백·정렬 단위로 측정해서 차이를 punch list로 보고한다.',
+          triggers: [
+            '외부 reference image / mockup 제공됨',
+            '"reference와 비교 / 비율 / 패딩이 달라"',
+            'PR open 직전 시각 마감',
+          ],
+          pillars: ['Capture viewport', 'Measure, not eyeball', 'Punch list로 차이 보고'],
+          docHref: `${SKILL_REPO_BASE}/visual-reference-compare/SKILL.md`,
+        },
       ],
-      pillars: ['Catalog first', 'Route to imagegen', 'Inline SVG는 UI 아이콘만'],
-      docHref: `${SKILL_REPO_BASE}/image-asset-strategy/SKILL.md`,
-    },
-    {
-      id: 'visual-reference-compare',
-      headline: '작업 후 reference와 측정 비교',
-      summary:
-        '"build passes / tests pass"는 디자인 검증이 아니다. 렌더된 viewport를 reference와 비율·여백·정렬 단위로 측정해서 차이를 punch list로 보고한다.',
-      triggers: [
-        '리포트 / PR / 다음 task 직전',
-        '"padding이 어긋난 거 같아"',
-        '"비율이 달라 보여"',
-      ],
-      pillars: ['Capture viewport', 'Measure, not eyeball', 'Punch list로 차이 보고'],
-      docHref: `${SKILL_REPO_BASE}/visual-reference-compare/SKILL.md`,
     },
   ];
 
@@ -381,52 +449,65 @@ function SkillsInUse() {
         <span className={styles.eyebrowDot} />
         Section 04 · Skills in use
       </span>
-      <h2 className={styles.sectionHeading}>이 연구에서 쓰는 3가지 스킬</h2>
+      <h2 className={styles.sectionHeading}>이 연구에서 쓰는 6가지 스킬</h2>
       <p className={styles.sectionLede}>
-        설계철학을 코드 옆에 박제하기 위해 Claude Code skill로 만들어 운영한다. 각 스킬은 작업
-        단계마다 다른 판단을 주입한다 — 시작 전(자산), 작업 중(CSS), 끝낸 직후(시각 비교).
+        설계철학을 코드 옆에 박제하기 위해 Claude Code skill로 만들어 운영한다. 작업의 두 단계 —
+        <strong> 가이드</strong>(시작·진행)와 <strong>검증</strong>(끝나기 직전·끝난 직후) — 마다
+        다른 스킬이 다른 판단을 주입한다. 새 케이스가 잡힐 때마다 스킬에 박제 → 다음 작업에서 스킬이
+        먼저 안내하는 사이클로 연구가 누적된다.
       </p>
-      <div className={styles.skillCardsGrid}>
-        {skills.map((skill, idx) => (
-          <article key={skill.id} className={styles.skillCard}>
-            <header className={styles.skillCardHeader}>
-              <span className={styles.skillCardIndex}>{String(idx + 1).padStart(2, '0')}</span>
-              <div className={styles.skillCardTitles}>
-                <span className={styles.skillCardSlug}>{skill.id}</span>
-                <h3 className={styles.skillCardHeadline}>{skill.headline}</h3>
-              </div>
-            </header>
-            <p className={styles.skillCardSummary}>{skill.summary}</p>
-            <dl className={styles.skillCardMeta}>
-              <div>
-                <dt className={styles.skillCardLabel}>Triggers</dt>
-                <ul className={styles.skillCardList}>
-                  {skill.triggers.map((t) => (
-                    <li key={t}>{t}</li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <dt className={styles.skillCardLabel}>Pillars</dt>
-                <ul className={styles.skillCardList}>
-                  {skill.pillars.map((p) => (
-                    <li key={p}>{p}</li>
-                  ))}
-                </ul>
-              </div>
-            </dl>
-            <a
-              className={styles.skillCardLink}
-              href={skill.docHref}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span>SKILL.md 확인하기</span>
-              <span aria-hidden>↗</span>
-            </a>
-          </article>
-        ))}
-      </div>
+      {groups.map((group, gIdx) => (
+        <div key={group.label} className={styles.skillsGroup}>
+          <header className={styles.skillsGroupHeader}>
+            <span className={styles.skillsGroupTag}>Group {String(gIdx + 1).padStart(2, '0')}</span>
+            <h3 className={styles.skillsGroupLabel}>{group.label}</h3>
+            <p className={styles.skillsGroupCaption}>{group.caption}</p>
+          </header>
+          <div className={styles.skillCardsGrid}>
+            {group.skills.map((skill, idx) => (
+              <article key={skill.id} className={styles.skillCard}>
+                <header className={styles.skillCardHeader}>
+                  <span className={styles.skillCardIndex}>
+                    {String(gIdx * 3 + idx + 1).padStart(2, '0')}
+                  </span>
+                  <div className={styles.skillCardTitles}>
+                    <span className={styles.skillCardSlug}>{skill.id}</span>
+                    <h4 className={styles.skillCardHeadline}>{skill.headline}</h4>
+                  </div>
+                </header>
+                <p className={styles.skillCardSummary}>{skill.summary}</p>
+                <dl className={styles.skillCardMeta}>
+                  <div>
+                    <dt className={styles.skillCardLabel}>Triggers</dt>
+                    <ul className={styles.skillCardList}>
+                      {skill.triggers.map((t) => (
+                        <li key={t}>{t}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <dt className={styles.skillCardLabel}>Pillars</dt>
+                    <ul className={styles.skillCardList}>
+                      {skill.pillars.map((p) => (
+                        <li key={p}>{p}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </dl>
+                <a
+                  className={styles.skillCardLink}
+                  href={skill.docHref}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>SKILL.md 확인하기</span>
+                  <span aria-hidden>↗</span>
+                </a>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
     </section>
   );
 }
@@ -438,6 +519,8 @@ function Conclusion() {
     'component contract',
     'layout contract',
     'agent skill',
+    'skill chain by phase',
+    'self-evolving skill loop',
   ];
 
   return (
