@@ -37,6 +37,7 @@ export default function LandingPage({ onNavigate }: Props) {
       <RiskMatrix />
       <TokenLadder />
       <SkillStructure />
+      <SkillsInUse />
       <Conclusion />
     </div>
   );
@@ -304,6 +305,93 @@ function SkillStructure() {
   );
 }
 
+function SkillsInUse() {
+  const skills = [
+    {
+      id: 'css-judgment',
+      headline: 'CSS work 판단',
+      summary:
+        'CSS는 속성 조합이 아니라 책임·언어·범위의 설계다. padding/margin/gap부터 z-index/overflow, 토큰 직접 사용까지 — 작업 직전에 세 가지 렌즈로 판단을 강제한다.',
+      triggers: [
+        'padding · margin · gap · 사이징',
+        'z-index · overflow · position',
+        'primitive token 직접 사용',
+      ],
+      pillars: ['Layout responsibility', 'Design language', 'Blast radius'],
+    },
+    {
+      id: 'image-asset-strategy',
+      headline: 'UI 시작 전 자산 카탈로그',
+      summary:
+        'UI 작업이 reference 이미지에서 시작하면 SVG로 사진을 흉내내는 충동이 가장 먼저 튀어나온다. 그 충동을 막기 위해 자산 슬롯을 먼저 카탈로그하고 imagegen으로 라우팅한다.',
+      triggers: [
+        'design reference / mockup / Figma URL',
+        'human · model · product · hero photo',
+        'editorial / 3D-rendered visual',
+      ],
+      pillars: ['Catalog first', 'Route to imagegen', 'Inline SVG는 UI 아이콘만'],
+    },
+    {
+      id: 'visual-reference-compare',
+      headline: '작업 후 reference와 측정 비교',
+      summary:
+        '"build passes / tests pass"는 디자인 검증이 아니다. 렌더된 viewport를 reference와 비율·여백·정렬 단위로 측정해서 차이를 punch list로 보고한다.',
+      triggers: [
+        '리포트 / PR / 다음 task 직전',
+        '"padding이 어긋난 거 같아"',
+        '"비율이 달라 보여"',
+      ],
+      pillars: ['Capture viewport', 'Measure, not eyeball', 'Punch list로 차이 보고'],
+    },
+  ];
+
+  return (
+    <section className={styles.section}>
+      <span className={styles.eyebrow}>
+        <span className={styles.eyebrowDot} />
+        Section 04 · Skills in use
+      </span>
+      <h2 className={styles.sectionHeading}>이 연구에서 쓰는 3가지 스킬</h2>
+      <p className={styles.sectionLede}>
+        설계철학을 코드 옆에 박제하기 위해 Claude Code skill로 만들어 운영한다. 각 스킬은 작업
+        단계마다 다른 판단을 주입한다 — 시작 전(자산), 작업 중(CSS), 끝낸 직후(시각 비교).
+      </p>
+      <div className={styles.skillCardsGrid}>
+        {skills.map((skill, idx) => (
+          <article key={skill.id} className={styles.skillCard}>
+            <header className={styles.skillCardHeader}>
+              <span className={styles.skillCardIndex}>{String(idx + 1).padStart(2, '0')}</span>
+              <div className={styles.skillCardTitles}>
+                <span className={styles.skillCardSlug}>{skill.id}</span>
+                <h3 className={styles.skillCardHeadline}>{skill.headline}</h3>
+              </div>
+            </header>
+            <p className={styles.skillCardSummary}>{skill.summary}</p>
+            <dl className={styles.skillCardMeta}>
+              <div>
+                <dt className={styles.skillCardLabel}>Triggers</dt>
+                <ul className={styles.skillCardList}>
+                  {skill.triggers.map((t) => (
+                    <li key={t}>{t}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <dt className={styles.skillCardLabel}>Pillars</dt>
+                <ul className={styles.skillCardList}>
+                  {skill.pillars.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+              </div>
+            </dl>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Conclusion() {
   const flow = [
     'raw css',
@@ -317,7 +405,7 @@ function Conclusion() {
     <section className={styles.section}>
       <span className={styles.eyebrow}>
         <span className={styles.eyebrowDot} />
-        Section 04 · Where we're going
+        Section 05 · Where we're going
       </span>
       <h2 className={styles.sectionHeading}>강한 엔지니어는 Agent가 사고할 언어를 설계한다</h2>
       <p className={styles.sectionLede}>

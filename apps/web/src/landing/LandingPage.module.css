@@ -424,6 +424,125 @@
   color: #7ee2a7;
 }
 
+/* ─── Skills in use ───────────────────────────────────── */
+
+.skillCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-lg);
+}
+
+.skillCard {
+  background: var(--surface-paper);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.skillCardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.skillCardIndex {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-circle);
+  background: var(--surface-ink);
+  color: var(--text-on-dark);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.skillCardTitles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  min-width: 0;
+}
+
+.skillCardSlug {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  color: var(--accent-brand-strong);
+}
+
+.skillCardHeadline {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-strong);
+  line-height: var(--line-height-tight);
+}
+
+.skillCardSummary {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+}
+
+.skillCardMeta {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px dashed var(--border-strong);
+}
+
+.skillCardMeta > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.skillCardLabel {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-subtle);
+}
+
+.skillCardList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.skillCardList li {
+  position: relative;
+  padding-left: var(--space-md);
+  font-size: var(--font-size-sm);
+  color: var(--text-default);
+  line-height: var(--line-height-snug);
+}
+
+.skillCardList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-circle);
+  background: var(--border-strong);
+}
+
 /* ─── Conclusion ──────────────────────────────────────── */
 
 .conclusion {
@@ -517,7 +636,8 @@
   .hero,
   .riskGrid,
   .skillLayout,
-  .conclusion {
+  .conclusion,
+  .skillCardsGrid {
     grid-template-columns: 1fr;
   }
 
