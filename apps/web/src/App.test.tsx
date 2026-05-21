@@ -34,7 +34,7 @@ describe('App shell', () => {
     const tabsNav = screen.getByRole('navigation', { name: /예시 선택/ });
     expect(within(tabsNav).getByRole('button', { name: /Fruit Shop/ })).toBeInTheDocument();
     expect(within(tabsNav).getByRole('button', { name: /Select Shop/ })).toBeInTheDocument();
-    expect(within(tabsNav).getByRole('button', { name: /Slot 03/ })).toBeInTheDocument();
+    expect(within(tabsNav).getByRole('button', { name: /포인트팡/ })).toBeInTheDocument();
   });
 
   it('쇼케이스 진입 시 첫 번째 예시가 활성 슬롯으로 표시된다', () => {

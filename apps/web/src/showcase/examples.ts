@@ -34,11 +34,13 @@ export const EXAMPLES: ExampleSlot[] = [
   },
   {
     slug: 'slot-3',
-    label: 'Slot 03',
-    tagline: '다음 실험 슬롯',
-    description: '레이아웃 contract만으로 화면 하나를 조립해보는 실험을 준비 중입니다.',
-    status: 'soon',
-    branch: '—',
+    label: '포인트팡',
+    tagline: '리워드 게이미피케이션 — 코랄/선샤인 톤',
+    description:
+      '포인트 적립형 부업 앱을 역설계 스펙(컴포넌트 트리 + 도메인 타입)만으로 조립한 세 번째 실험. 출석 도장 / 미션 그리드 / 랭킹 / 온보딩 단축이 한 화면에 모인 모바일 홈으로, fruit-shop·select-shop과 대비되는 에너제틱한 디자인 언어를 보여줍니다.',
+    status: 'live',
+    branch: 'feature/slot-3-ui',
+    embedPath: 'showcases/slot-3/',
   },
 ];
 

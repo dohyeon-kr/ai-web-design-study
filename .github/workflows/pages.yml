@@ -57,6 +57,7 @@ jobs:
           entries=(
             "fruit-shop:feature/fruit-shop-ui"
             "select-shop:feature/select-shop-ui"
+            "slot-3:feature/slot-3-ui"
           )
           for entry in "${entries[@]}"; do
             slug="${entry%%:*}"
