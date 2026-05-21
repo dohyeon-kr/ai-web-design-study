@@ -9,6 +9,7 @@ import type { Product } from './ProductCard';
 import ProductGrid from './ProductGrid';
 import SectionHeader from './SectionHeader';
 import Toast from './Toast';
+import { asset } from './asset';
 
 const EDITOR_PICKS: Product[] = [
   {
@@ -17,7 +18,7 @@ const EDITOR_PICKS: Product[] = [
     name: 'Cashmere Crewneck Knit',
     priceKrw: 248000,
     tone: 'sand',
-    imageSrc: '/images/product-cashmere-knit.jpg',
+    imageSrc: asset('images/product-cashmere-knit.jpg'),
     badge: 'NEW',
   },
   {
@@ -26,7 +27,7 @@ const EDITOR_PICKS: Product[] = [
     name: 'Pleated Wool Slacks',
     priceKrw: 189000,
     tone: 'graphite',
-    imageSrc: '/images/product-wool-slacks.jpg',
+    imageSrc: asset('images/product-wool-slacks.jpg'),
   },
   {
     id: 'p3',
@@ -34,7 +35,7 @@ const EDITOR_PICKS: Product[] = [
     name: 'Overdyed Card Holder',
     priceKrw: 68000,
     tone: 'clay',
-    imageSrc: '/images/product-card-holder.jpg',
+    imageSrc: asset('images/product-card-holder.jpg'),
     badge: 'SALE',
   },
   {
@@ -43,7 +44,7 @@ const EDITOR_PICKS: Product[] = [
     name: 'Soft Leather Derby',
     priceKrw: 329000,
     tone: 'ink',
-    imageSrc: '/images/product-leather-derby.jpg',
+    imageSrc: asset('images/product-leather-derby.jpg'),
     badge: 'RESTOCK',
   },
 ];

@@ -1,4 +1,5 @@
 import styles from './EditorialCard.module.css';
+import { asset } from './asset';
 
 type EditorialCardProps = {
   eyebrow: string;
@@ -12,7 +13,7 @@ export default function EditorialCard({ eyebrow, title, excerpt, readTime }: Edi
     <article className={styles.card}>
       <img
         className={styles.image}
-        src="/images/editorial-layering.jpg"
+        src={asset('images/editorial-layering.jpg')}
         alt="Style note editorial moodshot"
         loading="lazy"
       />

@@ -1,4 +1,5 @@
 import styles from './BrandSpotlight.module.css';
+import { asset } from './asset';
 import { notify } from './notify';
 
 type BrandItem = {
@@ -17,7 +18,7 @@ const ITEMS: BrandItem[] = [
     name: 'Boxy Wool Blazer',
     priceKrw: 389000,
     tone: 'ink',
-    imageSrc: '/images/kin-blazer.jpg',
+    imageSrc: asset('images/kin-blazer.jpg'),
   },
   {
     id: 'k2',
@@ -25,7 +26,7 @@ const ITEMS: BrandItem[] = [
     name: 'Boucle Knit Vest',
     priceKrw: 168000,
     tone: 'fog',
-    imageSrc: '/images/kin-knit-vest.jpg',
+    imageSrc: asset('images/kin-knit-vest.jpg'),
   },
   {
     id: 'k3',
@@ -33,7 +34,7 @@ const ITEMS: BrandItem[] = [
     name: 'Wide Wool Trouser',
     priceKrw: 215000,
     tone: 'graphite',
-    imageSrc: '/images/kin-trouser.jpg',
+    imageSrc: asset('images/kin-trouser.jpg'),
   },
 ];
 
@@ -52,7 +53,7 @@ export default function BrandSpotlight() {
       <div className={styles.brandHero}>
         <img
           className={styles.brandImage}
-          src="/images/brand-kin-hero.jpg"
+          src={asset('images/brand-kin-hero.jpg')}
           alt="KIN brand visual — minimal tailoring moodshot"
           loading="lazy"
         />

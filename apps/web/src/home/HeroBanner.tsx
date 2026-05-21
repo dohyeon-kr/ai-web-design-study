@@ -1,4 +1,5 @@
 import styles from './HeroBanner.module.css';
+import { asset } from './asset';
 import { notify } from './notify';
 
 type HeroBannerProps = {
@@ -12,7 +13,7 @@ export default function HeroBanner({ edition, title, caption }: HeroBannerProps)
     <article className={styles.banner}>
       <img
         className={styles.visual}
-        src="/images/hero-quiet-tailoring.jpg"
+        src={asset('images/hero-quiet-tailoring.jpg')}
         alt="Editorial moodshot — quiet tailoring"
       />
       <div className={styles.overlay} aria-hidden="true" />
