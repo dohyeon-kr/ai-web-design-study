@@ -1,12 +1,12 @@
 ---
 name: visual-design-audit
-description: Use at the end of any UI work — right before reporting "done" or opening a PR — to audit a rendered screen against two axes (심미성 / 유저 편의성). Captures viewport screenshots via cmux / agent-browser / playwright, then walks 13 lenses derived from Refactoring UI, NN/g 10 Heuristics, WCAG, Apple HIG, A List Apart, and Don Norman's "Design of Everyday Things." Enforces measurement (`getBoundingClientRect`, contrast, target-size in numbers) over eyeball judgment, with explicit guards for inner-scroll-container traps, carousel/swipe padding parity, page-vertical symmetry, and flex content-size shrinking. Returns a prioritized punch list with severity + lens + measured deltas + recommended fix. Distinct from `visual-reference-compare` — that skill compares a render against a supplied reference image; this skill judges whether the render is good design on its own terms. Triggers when no reference is supplied, when the user says "디자인 어때 / 괜찮아 보여 / 검토해줘 / 패딩 안 맞는 거 확인해", and as the standard final gate after frontend work.
+description: Use at the end of any UI work — right before reporting "done" or opening a PR — to audit a rendered screen against two axes (심미성 / 유저 편의성). Captures viewport screenshots via cmux / agent-browser / playwright, then walks 16 lenses derived from Refactoring UI, NN/g 10 Heuristics, WCAG, Apple HIG, A List Apart, and Don Norman's "Design of Everyday Things." Enforces measurement (`getBoundingClientRect`, contrast, target-size in numbers) over eyeball judgment, with explicit guards for inner-scroll-container traps, carousel/swipe padding parity, page-vertical symmetry, and flex content-size shrinking. Returns a prioritized punch list with severity + lens + measured deltas + recommended fix. Distinct from `visual-reference-compare` — that skill compares a render against a supplied reference image; this skill judges whether the render is good design on its own terms. Triggers when no reference is supplied, when the user says "디자인 어때 / 괜찮아 보여 / 검토해줘 / 패딩 안 맞는 거 확인해", and as the standard final gate after frontend work.
 ---
 
 # Visual Design Audit Skill
 
 > Build passing ≠ design good. The render must be **seen and judged** before shipping.
-> This skill walks the screen against two axes — **심미성**(aesthetic quality) and **유저 편의성**(usability) — using 13 lenses from canonical design literature.
+> This skill walks the screen against two axes — **심미성**(aesthetic quality) and **유저 편의성**(usability) — using 16 lenses from canonical design literature.
 
 ---
 
@@ -107,20 +107,25 @@ Bad signals:
 
 Good ref: Stripe docs, Linear changelog, Vercel marketing — body at 17-19px, headlines at 32-56px with strong weight contrast.
 
-### 4.2 Spacing rhythm — *Refactoring UI* ch. 3, *Every Layout*
+### 4.2 Spacing rhythm — *Refactoring UI* ch. 3, *Every Layout*, *8-Point Grid (Bryn Jackson)*
 
 > "Start with too much whitespace and remove until it feels right — not the other way."
 
 Check:
 - Are spacings drawn from a **scale** (4 / 8 / 12 / 16 / 24 / 32 / 40…) or arbitrary px?
+- Does the scale follow an **8pt grid** (multiples of 8) with optional **4pt baseline grid** for typography? — industry standard for scalability across DPRs.
 - Is **vertical rhythm consistent across sections** (e.g., every section uses the same large spacer)?
 - Is `gap` used on parent containers, not `margin` on every child?
 - Does the screen have **breathing room** at the page edges (≥ 24px on mobile, ≥ 40px on desktop)?
+- Is `line-height` a **multiple of the base unit** (e.g., 24px line-height for 16px text on an 8pt grid)?
+- **Micro vs macro spacing ratio** — micro (gaps inside a card / between paragraph lines) should be ≈ 1/3 of macro (gaps between sections). If a card's internal padding equals the gap between cards, the cards visually merge.
 
 Bad signals:
 - One section has 56px below, the next has 32px, the next has 48px — random
 - Cards crammed against each other with no separation
 - Page content touches the viewport edge
+- Internal card padding == external card gap → cards visually bleed into one mass
+- 1px / 3px / 7px-style spacings → not on any scale
 
 Good ref: Apple newsroom, Notion docs — generous, rhythmic spacing.
 
@@ -141,9 +146,18 @@ Bad signals:
 
 Tools: macOS `Digital Color Meter` / Chrome DevTools "Contrast" / `npx pa11y <url>`.
 
-### 4.4 Alignment & balance — *Don Norman*, *Refactoring UI*
+### 4.4 Alignment, balance & visual tension — *Don Norman*, *Refactoring UI*, *Smashing (compositional balance)*
 
-> "Optical alignment trumps mathematical alignment."
+> "Optical alignment trumps mathematical alignment. Symmetric balance is calm; asymmetric balance is alive."
+
+**Tension & focal point** (composition layer):
+- Is there **one clear focal point** the eye lands on first, and is it deliberately placed (not center-by-default)?
+- If the composition is asymmetric, are the visual weights balanced (one heavy element vs. several lighter ones / dense vs. spacious / dark vs. light)?
+- Are there **leading lines** (image edges, type baselines, dividers) that guide the eye to the focal point?
+- Is there at least one **dominant axis** the layout commits to (vertical column for editorial, diagonal for energetic, horizontal for narrative)? "Floats randomly" reads as undesigned.
+- Are complementary contrasts present where tension is wanted (light vs. dark, dense vs. sparse, large vs. small, color vs. mono)? Same-weight everywhere = flat.
+
+**Alignment (measurement layer):**
 
 Check:
 - Are siblings (cards, list items) **left-edge aligned**? (measure with `getBoundingClientRect().left` — *do not eyeball*)
@@ -178,7 +192,49 @@ Bad signals:
 - Justified text with awkward gaps
 - Long URL / 어절 forcing horizontal scroll → missing `overflow-wrap: break-word`
 
-### 4.6 Distinctiveness — *frontend-design* skill alignment
+### 4.6 Image use & composition — *A List Apart*, *Refactoring UI*, editorial photography best practices
+
+> "An image is a co-author of the headline. If it doesn't argue for the page, it's filler."
+
+Check:
+- **Aspect ratio**: hero ≥ **1.7:1** (16:9 baseline) on desktop, taller crop (4:5 or 3:4) on mobile. Aspect should be a design decision, not a CMS upload accident.
+- **Focal point**: subject in the **rule-of-thirds** anchor, not always center. If text overlays the image, the focal point and the text occupy **different thirds**.
+- **Text-over-image contrast**: WCAG 4.5:1 against the **actual pixels behind the text** (not the average). Use a dim overlay or vignette if the image is busy.
+- **Photographic vs. illustration choice**: editorial moodshot for emotion, illustration for abstract concepts, photography for product. Don't mix all three on one page without a clear hierarchy of voice.
+- **Mobile crop survives**: the desktop hero usually crops to mobile with the right 30% lost. Verify the focal point still reads at the mobile crop.
+- **Image-to-text ratio per fold**: an entirely-text fold reads as a wall; an entirely-image fold reads as advertising. Aim for **roughly 40-60% image weight** in editorial sections, 0% in dense info sections — but pick deliberately, not by accident.
+- **Loading strategy**: hero `loading="eager"` + `fetchpriority="high"`; below-fold `loading="lazy"`. Mis-set lazy on hero = visible pop-in.
+
+Bad signals:
+- Hero is a generic stock photo of laptops/handshakes — no editorial voice
+- Text sits awkwardly over a busy region of the image (no overlay, no contrast)
+- Every image is the same 16:9 aspect and same focal placement — visual monotony
+- Hero focal point gets cropped out on mobile
+
+### 4.7 Proportion & negative space — *Vanseo Design (golden section)*, *A List Apart (modular typography)*, *IxDF (white space)*
+
+> "Whitespace is not absence; it is composition. Proportion is not aesthetics; it is structure."
+
+**Proportion & modular scale:**
+- Type sizes drawn from a **modular scale ratio** (1.250 Major Third / 1.333 Perfect Fourth / 1.5 Augmented Fourth / 1.618 Golden Ratio)? Each step is a deliberate multiple, not a guess.
+- Body / lede / heading sizes preserve the ratio across breakpoints?
+- Hero column-to-side-column width ratio reads as intentional (e.g., 1.618 : 1 for golden, 1.2 : 1 for near-equal, 2 : 1 for emphasis)?
+
+**Negative space (Micro vs Macro):**
+- **Macro whitespace** (between major sections, page margins, around hero) — generous, defines the page's calm
+- **Micro whitespace** (between lines, around paragraph, inside cards) — tight enough that grouping is preserved
+- **Ratio**: micro ≈ 1/3 of macro. If they're equal, every group blurs into the next.
+- **Gestalt proximity check**: items in the same group should be visually closer to each other than to items in a different group.
+- **Page edge margins** scale with viewport (e.g., 16-24px mobile / 40-80px desktop / centered max-width ≤ 1200px on ultra-wide).
+
+Bad signals:
+- Type sizes are 15 / 16 / 18 / 22 / 24 / 28 / 36 — no consistent ratio, looks like trial-and-error
+- Section spacing == card spacing == paragraph spacing — everything blurs together (Gestalt proximity broken)
+- Page margins are 0 — content hugs viewport edge, no breathing room
+- Excessive whitespace **inside** cards but cards crammed against each other (proportion inverted)
+- Hero columns split 50/50 by default — perfectly symmetric is often the least interesting choice
+
+### 4.8 Distinctiveness — *frontend-design* skill alignment
 
 > "Avoid the generic AI aesthetic: centered hero / 3-card grid / purple gradient / 'Get Started' CTA."
 
@@ -305,7 +361,37 @@ Fix recipe (CSS):
 .carousel > * { scroll-snap-align: start; }
 ```
 
-### 5.7 Empty / error / edge states — *NN/g #9*
+### 5.7 Micro-interaction & feedback — *Apple HIG (Animation), NN/g #1*
+
+> "A polished UI has motion. Not flashy motion — confirmation motion."
+
+Check:
+- Every interactive element has a **visible state change** on hover (desktop) and active/press (mobile)? (subtle color shift, scale 0.97 on press, border emphasis — pick a small, consistent vocabulary)
+- Cards / buttons feel "alive" on hover, or are they static rectangles?
+- **Critical feedback motions are present**: progress bar fill animation, save toast slide-in, optimistic UI update, skeleton shimmer
+- **Restraint**: motion ≤ 200ms (NN/g), `prefers-reduced-motion` respected, no decorative loops competing with content
+
+Bad signals:
+- Buttons are visually inert until clicked (no hover, no press) — feels unresponsive
+- All motion happens in 800ms eases — feels sluggish
+- Decorative parallax / scroll-jacking on a content site — distracting
+- `:hover` defined but no `:focus-visible` — keyboard users get nothing
+
+Patterns to add (light, default these in):
+```css
+.interactiveCard {
+  transition: transform 0.12s ease, background-color 0.12s ease, border-color 0.12s ease;
+}
+.interactiveCard:hover  { background-color: var(--surface-hover); }
+.interactiveCard:active { transform: scale(0.98); }
+.interactiveCard:focus-visible { outline: 2px solid var(--accent-focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .interactiveCard { transition: none; }
+  .interactiveCard:active { transform: none; }
+}
+```
+
+### 5.8 Empty / error / edge states — *NN/g #9*
 
 > "Help users recognize, diagnose, and recover from errors."
 
@@ -327,7 +413,7 @@ Bad signals:
 For each captured screenshot:
 
 1. **First impression (10s)** — Note your gut reaction in one sentence. *"What do I see first? What feels off?"* This single sentence often surfaces the real issue faster than checklists.
-2. **Walk the 13 lenses** — Don't skip ones that feel "obviously fine." The skip is where regressions hide.
+2. **Walk the 16 lenses** — Don't skip ones that feel "obviously fine." The skip is where regressions hide.
 3. **Measure — don't eyeball.** This is the single biggest lift in audit quality. Open the page in cmux/playwright and pull numbers, then compare to thresholds:
 
    ```js
@@ -372,6 +458,16 @@ For each captured screenshot:
 5. **For each finding** include: severity / axis / lens / location (component or screenshot region) / **measured numbers** / recommended fix / reference (which article / heuristic).
 
 > "정렬이 안 맞아 보여" 는 약함. "Card 3의 width가 156px인데 나머지 4개는 168px — `<button>`이 flex column 안에서 콘텐츠 폭으로 줄어듦. `width: 100%` 추가." 가 강함.
+
+### 6.1 Self-critique loop (강제)
+
+스크린샷을 본 직후, 다음 한 줄을 **반드시** 적는다 — "approve 직전 마지막 솔직한 평가":
+
+> *"내가 이 화면을 처음 보는 사람이라면, '이 부분은 디자인이 좀 약하다'고 말할 곳은 어디인가?"*
+
+찾았다면 그 위치를 **major 이상**으로 분류한다. 자가 critique 없이 "다 괜찮다"로 끝나는 audit은 lens를 walk했더라도 실패한 audit이다. 이 한 줄은 보통 디자인 자체의 결함(레이아웃 결정 / 카드 컨셉 / 정보 위계)을 노출하며, 그건 css-judgment로는 못 잡고 **재설계로만** 잡힌다.
+
+재설계가 필요하다고 판단되면 해당 컴포넌트는 `frontend-design` 스킬로 라우팅하고 "redesign 후보" 로 보고에 명시.
 
 ---
 
@@ -459,4 +555,10 @@ If you find only **major / minor / nit**, list them in the punch list and let th
 - **Material Design 3 Guidelines** — touch target, motion, accessibility.
 - **Every Layout** — Bell & Andrew. CSS layout primitives and rhythm.
 - **Tufte, Edward** — *Visual Display of Quantitative Information*. Density, signal/noise.
+- **8-Point Grid (Bryn Jackson, Spec.fm)** — multiples-of-8 spacing scale + 4pt baseline grid for typography.
+- **Modular scale (Tim Brown / A List Apart)** — type sizes drawn from a ratio (1.250 / 1.333 / 1.5 / 1.618).
+- **Golden ratio in UI (Figma resource library, NN/g)** — 1.618 as a column / typography / button proportion.
+- **Negative space in design (IxDF)** — micro vs macro whitespace; micro ≈ 1/3 of macro; Gestalt proximity for grouping.
+- **Compositional balance (Smashing Magazine)** — symmetric vs. asymmetric balance; visual tension via weight contrast and leading lines.
+- **Hero image best practices (Shopify / Squarespace blog)** — 16:9 baseline, mobile crop survival, focal at rule-of-thirds, text/image contrast.
 - **한국 디자인 블로그** — toss / 카카오디자인 / 우아한형제들 / karrot — Hangul-aware patterns to compare against.

@@ -104,6 +104,9 @@ Failing to make this decision leads to bugs like "fixed 48px child collides with
 - ❌ **`align-items: stretch` (default) + sibling-with-shorter-content** in grid/flex → the shorter card stretches to the taller sibling and grows an awkward empty band of background. Either let the shorter card keep its intrinsic height (`align-self: start`) or rebalance content so both sides are visually full.
 - ❌ **Choosing the responsive breakpoint by the wrong child** — a 2-col grid where one child is a long code block needs a wider breakpoint than a 2-col grid where both children are short text. A single "all 2-col layouts collapse at 900px" rule will leave the heavier layout broken between 900 and ~1024px. Decide per-layout, not per-skill.
 - ❌ **Forgetting to reset browser-default `<ol>` / `<ul>` styling** when using them as design containers — `<ol>` ships with `padding-inline-start: ~40px` + numeric markers, `<ul>` ships with `padding-inline-start: ~40px` + disc markers. If you're treating the list as a flex/grid card stack (markers replaced by your own indices, alignment owned by the parent), you must reset: `margin: 0; padding: 0; list-style: none;`. Symptom: card stack pushed inward by ~40px on the leading edge, no apparent rule to point at — because it's a UA default, not your stylesheet.
+- ❌ **Flex column scroll-container with content overflow → siblings get squashed** — a scroll container declared as `display: flex; flex-direction: column; overflow: auto` will let the default `flex-shrink: 1` collapse short-but-important children (a hero, a sticky header) down to their min-content height once the total content exceeds the container. The hero looks fine in dev when content is short, then "disappears" (collapses to 36px) once you add the rest of the page. Fix: mark every non-scrolling child with `flex-shrink: 0`, or switch the container to `display: block` + `min-height` if scroll is the only reason flex was chosen.
+- ❌ **Sticky element without an explicit `z-index`** — `position: sticky` does **not** create a stacking context that floats above siblings by default. Once a later section (a banner, a modal-like card, a toast) introduces its own stacking context or its own positioned children, the sticky nav silently slides under them. Always pair `position: sticky` with `z-index: <value above any sibling stacking context>`.
+- ❌ **Introducing a sticky / fixed bar without reserving content padding for it** — adding a sticky bottom nav of height 64px without adding `padding-bottom: 64px` (or its safe-area equivalent) to the scroll content means the **last screenful of content sits under the nav and is permanently hidden**. The bug rarely shows up in dev because designers always scroll to the top. Same trap with sticky top headers and the first viewport.
 
 ---
 
@@ -236,6 +239,68 @@ A hero is `display: grid; grid-template-columns: 1.2fr 1fr; align-items: stretch
 **Good — option C** (the empty space is real because the right card is too thin — add a second piece of content there: a signature, a related link, a date stamp). Layout choices are content choices.
 
 Judgment rule: when one child of an `align-items: stretch` parent is consistently shorter, ask *"is the gap because of layout default or because the content is genuinely missing?"* before patching.
+
+### Example 10 — Flex column scroll-container squashing a child
+
+A mobile-shaped page uses an inner scroll container for the hero / list / banners. Initial dev shows a tall hero. Add more sections; reload. The hero is now 36px tall — **squashed** — because:
+
+**Bad**
+```css
+.scroll {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+}
+/* hero, list, banner are all flex items with the default flex-shrink: 1 */
+```
+
+Once total content height > container height, every flex item gets pro-rata shrunk. The hero, which has no `flex-shrink: 0`, collapses first.
+
+**Good**
+```css
+.scroll {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+}
+.hero, .stickyHeader { flex-shrink: 0; }  /* must keep intrinsic height */
+.list { /* this one is the one that should shrink/grow */ }
+```
+
+Or, if scroll was the only reason for flex:
+
+```css
+.scroll { display: block; overflow-y: auto; height: 100%; }
+```
+
+Judgment rule: **a scroll container made of `display: flex; flex-direction: column` opts every child into mutual shrinking** — make the opt-out explicit on every child that must hold its own height.
+
+### Example 11 — Sticky bar without z-index / without content reserve
+
+A bottom nav: `position: sticky; bottom: 0;`. Looks fine on a calm page. Later a `NEW` promo banner with its own `transform` or `position: relative` is added mid-page. Now scrolling brings the banner *over* the nav — the banner has an implicit stacking context that beats the unspecified `z-index: auto` of the nav.
+
+**Bad**
+```css
+.bottomNav { position: sticky; bottom: 0; }
+.promoBanner { transform: translateZ(0); /* or any positioned child */ }
+```
+
+**Good — two fixes, both needed**
+```css
+.bottomNav {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;        /* above any sibling stacking context */
+}
+.scrollContent {
+  padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  /* reserve the nav's height so the last section isn't trapped under it */
+}
+```
+
+Judgment rule: every `position: sticky` / `position: fixed` introduces **two** debts — declare `z-index`, and reserve space at the opposite edge so content isn't permanently hidden.
 
 ### Example 9 — Per-layout breakpoint, not per-skill breakpoint
 
