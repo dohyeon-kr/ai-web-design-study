@@ -8,6 +8,15 @@
   gap: var(--space-md);
   border: 1px solid var(--border-card);
   text-align: left;
+  transition: transform var(--transition-snap), box-shadow var(--transition-fast);
+}
+
+.card:hover .icon {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.card:hover {
+  box-shadow: 0 10px 24px rgba(255, 74, 22, 0.15);
 }
 
 .icon {
@@ -20,6 +29,7 @@
   font-size: 22px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
   flex-shrink: 0;
+  transition: transform var(--transition-snap);
 }
 
 .body {

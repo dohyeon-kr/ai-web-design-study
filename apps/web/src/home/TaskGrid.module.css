@@ -16,6 +16,16 @@
   text-align: left;
   min-height: 156px;
   width: 100%;
+  transition: transform var(--transition-snap), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(255, 74, 22, 0.12);
+}
+
+.card:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .cardTopRow {
@@ -34,6 +44,11 @@
   font-size: 18px;
   color: var(--text-on-hero);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform var(--transition-snap);
+}
+
+.card:hover .icon {
+  transform: rotate(-6deg) scale(1.06);
 }
 
 .hotBadge {
@@ -44,6 +59,17 @@
   padding: 3px 7px;
   border-radius: var(--radius-pill);
   letter-spacing: 0.04em;
+  animation: hotPop 1.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes hotPop {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
 }
 
 .label {
@@ -76,6 +102,11 @@
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-black);
   color: var(--text-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.headline {
+  text-wrap: balance;
 }
 
 .reward span {

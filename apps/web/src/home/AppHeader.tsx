@@ -18,9 +18,9 @@ export default function AppHeader() {
           <IconBell size={16} />
           <span className={styles.dot} aria-hidden />
         </button>
-        <div className={styles.profile} aria-label="내 프로필">
+        <button type="button" className={styles.profile} aria-label="내 프로필">
           도
-        </div>
+        </button>
       </div>
     </header>
   );

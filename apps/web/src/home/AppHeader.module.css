@@ -19,13 +19,13 @@
   width: 32px;
   height: 32px;
   border-radius: var(--radius-card-sm);
-  background: linear-gradient(135deg, #ff6b3d, #ffb020);
+  background: #fff5ec;
   display: grid;
   place-items: center;
   font-size: 18px;
   color: var(--text-on-hero);
   font-weight: var(--font-weight-black);
-  box-shadow: 0 4px 12px rgba(255, 74, 22, 0.35);
+  box-shadow: 0 4px 12px rgba(255, 74, 22, 0.18);
 }
 
 .brand {
@@ -50,6 +50,13 @@
   place-items: center;
   font-size: 16px;
   position: relative;
+  color: var(--text-strong);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.iconBtn:hover {
+  background: #ffe7d3;
+  color: var(--text-accent);
 }
 
 .dot {

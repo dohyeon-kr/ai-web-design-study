@@ -56,15 +56,22 @@
   --radius-circle: 50%;
   --radius-stamp: 14px;
 
-  /* Type sizes */
-  --font-size-2xs: 10px;
-  --font-size-xs: 11px;
-  --font-size-sm: 13px;
-  --font-size-md: 15px;
-  --font-size-lg: 18px;
-  --font-size-xl: 22px;
-  --font-size-2xl: 28px;
-  --font-size-3xl: 34px;
+  /* Font family — Pretendard first (한글 자모 metric 보존) */
+  --font-family-sans:
+    "Pretendard Variable", Pretendard,
+    -apple-system, BlinkMacSystemFont, system-ui,
+    "Apple SD Gothic Neo", "Malgun Gothic",
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* Type sizes — Korean-tuned (body 17px / display 한 단계 낮춤) */
+  --font-size-2xs: 11px;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 17px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 30px;
+  --font-size-3xl: 36px;
 
   /* Font weights */
   --font-weight-regular: 400;
@@ -72,10 +79,23 @@
   --font-weight-bold: 700;
   --font-weight-black: 900;
 
-  /* Line heights */
-  --line-height-tight: 1.1;
-  --line-height-snug: 1.25;
-  --line-height-relaxed: 1.5;
+  /* Line heights — 영문 기준 +0.1, 받침 충돌 방지 */
+  --line-height-tight: 1.18;
+  --line-height-snug: 1.4;
+  --line-height-relaxed: 1.7;
+
+  /* Letter-spacing — 한글 본문 미세 조여줌 */
+  --letter-spacing-display: -0.025em;
+  --letter-spacing-tight: -0.015em;
+  --letter-spacing-snug: -0.01em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-caps: 0.12em;
+
+  /* Motion */
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-fast: 120ms var(--ease-out);
+  --transition-snap: 200ms var(--ease-spring);
 
   /* Shadow */
   --shadow-card: 0 4px 18px rgba(255, 74, 22, 0.08);

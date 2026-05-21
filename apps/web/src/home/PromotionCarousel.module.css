@@ -31,6 +31,17 @@
   text-align: left;
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
+  transition: transform var(--transition-snap), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(26, 29, 34, 0.18);
+}
+
+.card:active {
+  transform: translateY(0) scale(0.99);
 }
 
 .card::after {

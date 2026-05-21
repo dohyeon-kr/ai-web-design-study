@@ -41,8 +41,8 @@ export default function HomePage() {
         <div className={styles.section}>
           <OnboardingShortcut />
         </div>
+        <BottomNavigation />
       </div>
-      <BottomNavigation />
     </section>
   );
 }

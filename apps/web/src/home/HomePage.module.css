@@ -1,7 +1,7 @@
 .frame {
   width: 100%;
   max-width: 412px;
-  min-height: calc(100dvh - var(--space-md) * 2);
+  height: calc(100dvh - var(--space-md) * 2);
   background: var(--surface-app);
   border-radius: var(--radius-card);
   box-shadow: 0 24px 60px rgba(255, 74, 22, 0.18);
@@ -18,7 +18,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
-  padding-bottom: 96px;
+}
+
+.scroll > * {
+  flex-shrink: 0;
 }
 
 .scroll::-webkit-scrollbar {

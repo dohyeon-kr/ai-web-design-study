@@ -100,6 +100,7 @@
   font-weight: var(--font-weight-black);
   color: var(--text-strong);
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .point span {
@@ -107,4 +108,16 @@
   color: var(--text-muted);
   font-weight: var(--font-weight-bold);
   margin-left: 2px;
+}
+
+.delta {
+  font-variant-numeric: tabular-nums;
+}
+
+.row {
+  transition: background var(--transition-fast);
+}
+
+.row:hover:not(.me) {
+  background: rgba(255, 74, 22, 0.06);
 }
