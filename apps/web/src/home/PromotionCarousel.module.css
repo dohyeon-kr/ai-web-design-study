@@ -44,14 +44,32 @@
 }
 
 .card::after {
-  content: '';
+  content: none;
+}
+
+.image {
   position: absolute;
-  top: -30px;
-  right: -30px;
-  width: 120px;
-  height: 120px;
-  border-radius: var(--radius-circle);
-  background: rgba(255, 255, 255, 0.14);
+  top: 4px;
+  right: -8px;
+  width: 92px;
+  height: 92px;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.18));
+  z-index: 0;
+  transition: transform var(--transition-snap);
+}
+
+.card:hover .image {
+  transform: scale(1.05) rotate(-3deg);
+}
+
+.badge,
+.title,
+.body,
+.cta {
+  position: relative;
+  z-index: 1;
 }
 
 .badge {

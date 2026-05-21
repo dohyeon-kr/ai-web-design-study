@@ -11,15 +11,31 @@
 }
 
 .banner::before {
-  content: '';
+  content: none;
+}
+
+.image {
   position: absolute;
-  bottom: -20px;
-  right: 24px;
-  width: 90px;
-  height: 90px;
-  border-radius: var(--radius-circle);
-  background: radial-gradient(circle, #ff6b3d 0%, transparent 70%);
-  opacity: 0.55;
+  top: 50%;
+  right: 100px;
+  transform: translateY(-50%);
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 6px 14px rgba(122, 90, 255, 0.4));
+  z-index: 0;
+  animation: floatY 5s ease-in-out infinite;
+}
+
+.left,
+.cta {
+  z-index: 1;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(-50%); }
+  50% { transform: translateY(calc(-50% - 4px)); }
 }
 
 .left {

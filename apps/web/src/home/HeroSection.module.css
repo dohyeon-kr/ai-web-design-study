@@ -28,10 +28,10 @@
 
 .heroCoin {
   position: absolute;
-  top: 8px;
-  right: -12px;
-  width: 124px;
-  height: 124px;
+  top: -8px;
+  right: -28px;
+  width: 184px;
+  height: 184px;
   pointer-events: none;
   user-select: none;
   filter: drop-shadow(0 8px 16px rgba(166, 36, 7, 0.32));

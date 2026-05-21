@@ -57,8 +57,8 @@ export default function HeroSection() {
           src={`${import.meta.env.BASE_URL}images/hero-coin.png`}
           alt=""
           className={styles.heroCoin}
-          width="124"
-          height="124"
+          width="184"
+          height="184"
           aria-hidden
         />
         <div className={styles.topRow}>

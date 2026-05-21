@@ -17,6 +17,14 @@ export default function PromotionCarousel() {
               role="listitem"
               aria-label={promo.title.replace(/\n/g, ' ')}
             >
+              <img
+                src={`${import.meta.env.BASE_URL}${promo.image}`}
+                alt=""
+                className={styles.image}
+                width="92"
+                height="92"
+                aria-hidden
+              />
               <span className={styles.badge}>{promo.badge}</span>
               <h4 className={styles.title}>{promo.title}</h4>
               <p className={styles.body}>{promo.body}</p>

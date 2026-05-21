@@ -30,6 +30,7 @@ export type Promotion = {
   reward: Point;
   surface: string;
   badge: string;
+  image: string;
 };
 
 export type Ranker = {
@@ -119,6 +120,7 @@ export const PROMOTIONS: Promotion[] = [
     reward: 5000,
     surface: 'var(--surface-promo-primary)',
     badge: '추천',
+    image: 'images/promo-invite.png',
   },
   {
     id: 'p2',
@@ -128,6 +130,7 @@ export const PROMOTIONS: Promotion[] = [
     reward: 10000,
     surface: 'var(--surface-promo-dark)',
     badge: 'HOT',
+    image: 'images/promo-challenge.png',
   },
   {
     id: 'p3',
@@ -137,6 +140,7 @@ export const PROMOTIONS: Promotion[] = [
     reward: 2,
     surface: 'var(--surface-promo-warm)',
     badge: '주말',
+    image: 'images/promo-invite.png',
   },
 ];
 

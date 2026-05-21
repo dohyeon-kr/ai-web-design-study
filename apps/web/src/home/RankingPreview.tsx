@@ -1,7 +1,12 @@
 import type { CSSProperties } from 'react';
-import { IconMedal } from '../icons';
 import { type Ranker, RANKERS } from './domain';
 import styles from './RankingPreview.module.css';
+
+const MEDAL_IMG: Record<1 | 2 | 3, string> = {
+  1: 'images/medal-gold.png',
+  2: 'images/medal-silver.png',
+  3: 'images/medal-bronze.png',
+};
 
 /* coral-family tonal: 1위는 darker, 점차 muted로 */
 const AVATAR_BG = ['#ff6b3d', '#ff9050', '#d8956b', '#b87d5e', '#a26b50', '#8b5a45'];
@@ -27,9 +32,20 @@ function RankRow({ ranker, topPoint }: { ranker: Ranker; topPoint: number }) {
   return (
     <div className={rowClass} role="listitem">
       <div className={styles.medalWrap}>
-        <div className={styles.medal} data-rank={String(ranker.rank)} aria-hidden>
-          {isMedalRank(ranker.rank) ? <IconMedal rank={ranker.rank} size={18} /> : ranker.rank}
-        </div>
+        {isMedalRank(ranker.rank) ? (
+          <img
+            src={`${import.meta.env.BASE_URL}${MEDAL_IMG[ranker.rank]}`}
+            alt=""
+            className={styles.medalImg}
+            width="44"
+            height="44"
+            aria-hidden
+          />
+        ) : (
+          <div className={styles.medal} data-rank="other" aria-hidden>
+            {ranker.rank}
+          </div>
+        )}
       </div>
       <div className={styles.info}>
         <div className={styles.nameRow}>
