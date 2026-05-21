@@ -35,11 +35,24 @@ export default function LandingPage({ onNavigate }: Props) {
     <div className={styles.root}>
       <Hero onNavigate={onNavigate} />
       <RiskMatrix />
+      <DividerResearch />
       <TokenLadder />
       <SkillStructure />
       <SkillsInUse />
       <Conclusion />
     </div>
+  );
+}
+
+function DividerResearch() {
+  return (
+    <figure className={styles.sectionDivider}>
+      <img
+        src={`${import.meta.env.BASE_URL}images/landing-divider-research.png`}
+        alt="레이아웃 그리드와 연결선이 교차하는 연구 노트 구분선"
+        loading="lazy"
+      />
+    </figure>
   );
 }
 
@@ -78,18 +91,29 @@ function Hero({ onNavigate }: { onNavigate: (route: Route) => void }) {
           </a>
         </div>
       </div>
-      <aside className={styles.heroCard}>
-        <span className={styles.heroCardLabel}>Core hypothesis</span>
-        <p className={styles.heroCardQuote}>
-          CSS를 Agent에게 맡기는 일은
-          <br />
-          <strong>"더 똑똑한 Agent"를 만드는 일</strong>이 아니라
-          <br />
-          <strong>"Agent가 망치기 어려운 시스템"</strong>을 만드는 일에 가깝다.
-        </p>
-        <p className={styles.heroCardFootnote}>
-          위임의 단위는 코드가 아니라 contract — Agent가 다루는 추상화 레벨을 끌어올려야 한다.
-        </p>
+      <aside className={styles.heroAside}>
+        <figure className={styles.heroFigure}>
+          <img
+            className={styles.heroImage}
+            src={`${import.meta.env.BASE_URL}images/landing-hero-moodshot.jpg`}
+            alt="잉크와 그리드가 담긴 디자이너의 작업 책상"
+            loading="eager"
+            fetchPriority="high"
+          />
+        </figure>
+        <div className={styles.heroCard}>
+          <span className={styles.heroCardLabel}>Core hypothesis</span>
+          <p className={styles.heroCardQuote}>
+            CSS를 Agent에게 맡기는 일은
+            <br />
+            <strong>"더 똑똑한 Agent"를 만드는 일</strong>이 아니라
+            <br />
+            <strong>"Agent가 망치기 어려운 시스템"</strong>을 만드는 일에 가깝다.
+          </p>
+          <p className={styles.heroCardFootnote}>
+            위임의 단위는 코드가 아니라 contract — Agent가 다루는 추상화 레벨을 끌어올려야 한다.
+          </p>
+        </div>
       </aside>
     </section>
   );
@@ -455,6 +479,12 @@ function Conclusion() {
           <p className={styles.calloutFootnote}>
             모든 상황을 미리 나열할 수 없으니, Agent에게는 판단 기준을 공유한다.
           </p>
+          <img
+            className={styles.closingMark}
+            src={`${import.meta.env.BASE_URL}images/landing-closing-mark.png`}
+            alt="손 도장처럼 찍힌 AI 연구 노트의 마무리 마크"
+            loading="lazy"
+          />
         </aside>
       </div>
     </section>

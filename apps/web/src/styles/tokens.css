@@ -1,22 +1,25 @@
 :root {
-  /* ─── Surfaces ─────────────────────────────────────────── */
-  --surface-page: #f4eefa;
-  --surface-app: #ffffff;
+  /* ─── Surfaces — warm-neutral monochrome (paper / ink)
+   * 라일락 베이스를 paper white로 전환. 강조 컬러는 surface가 아닌
+   * accent 토큰의 국소 사용으로만. 카드별 배경색 분산 금지. */
+  --surface-page: #f6f4ef; /* warm paper — 살짝 누런 화이트 */
+  --surface-app: #fbfaf6;
   --surface-paper: #ffffff;
   --surface-elevated: #ffffff;
-  --surface-muted: #efeaf6;
-  --surface-ink: #0e1419;
+  --surface-muted: #ede9e0; /* 카드 chip / muted band */
+  --surface-ink: #0e1419; /* deep ink — primary CTA, nav active */
   --surface-code: #14181f;
   --surface-tab-active: #0e1419;
-  --surface-tab-rest: #ffffff;
-  --surface-badge-soon: #e8e2f3;
-  --surface-badge-live: #d6efe0;
+  --surface-tab-rest: #fbfaf6;
+  --surface-badge-soon: #e7e3d8; /* monochrome (live badge만 accent) */
+  --surface-badge-live: #d6efe0; /* 유일한 surface-level 컬러 — status semantic */
 
-  /* Brand / accent — semantic, not raw color names */
-  --accent-brand: #6c4cf3;
+  /* Brand / accent — 페이지 안에서 ONE accent만 사용한다는 원칙.
+   * warning/positive는 status semantic 한정 (Risk card는 monochrome border + weight). */
+  --accent-brand: #6c4cf3; /* THE accent — eyebrow dot / CTA hover / hero 한 단어 */
   --accent-brand-strong: #4c2cd6;
-  --accent-warning: #c25a1d;
-  --accent-positive: #1f7a4c;
+  --accent-warning: #b04a1a; /* 사용 위치 제한: code warn 라벨, 위험 status 한정 */
+  --accent-positive: #1d6a44; /* live badge / code ok 라벨 한정 */
   --accent-rule: #d8d2e6;
 
   /* ─── Text ─────────────────────────────────────────────── */
@@ -30,11 +33,11 @@
   --code-text-muted: #8a93a6;
   --code-text-accent: #b69bff;
 
-  /* ─── Borders ─────────────────────────────────────────── */
-  --border-soft: #e3dcef;
-  --border-strong: #c8bedf;
-  --border-card: #ece6f5;
-  --border-tab: #d8d2e6;
+  /* ─── Borders — neutral grayscale (라일락 색조 제거) */
+  --border-soft: #e2dfd6;
+  --border-strong: #c3bfb3;
+  --border-card: #ebe7dc;
+  --border-tab: #d6d2c4;
 
   /* ─── Spacing ─────────────────────────────────────────── */
   --space-2xs: 4px;

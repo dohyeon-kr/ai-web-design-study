@@ -22,7 +22,7 @@
   font-size: var(--font-size-xs);
   letter-spacing: var(--letter-spacing-caps);
   text-transform: uppercase;
-  color: var(--accent-brand-strong);
+  color: var(--text-muted);
 }
 
 .eyebrowDot {
@@ -78,10 +78,8 @@
 }
 
 .heroTitleAccent {
-  background: linear-gradient(120deg, var(--accent-brand), #ff7eb6 80%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent-brand);
+  font-style: italic;
 }
 
 .heroSub {
@@ -125,6 +123,29 @@
   background: var(--surface-muted);
 }
 
+.heroAside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-self: start;
+  min-width: 0;
+}
+
+.heroFigure {
+  margin: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--surface-muted);
+  aspect-ratio: 4 / 5;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .heroCard {
   background: var(--surface-paper);
   border: 1px solid var(--border-card);
@@ -134,8 +155,6 @@
   flex-direction: column;
   gap: var(--space-md);
   box-shadow: var(--shadow-elevated);
-  /* 컨텐츠가 짧아서 hero copy 높이에 끌려가지 않도록 자기 크기로 고정 */
-  align-self: start;
 }
 
 .heroCardLabel {
@@ -143,7 +162,7 @@
   font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-caps);
-  color: var(--accent-brand-strong);
+  color: var(--text-muted);
 }
 
 .heroCardQuote {
@@ -180,11 +199,13 @@
 }
 
 .riskCardSafe {
-  border-color: color-mix(in srgb, var(--accent-positive) 30%, var(--border-card));
+  border-color: var(--border-strong);
 }
 
 .riskCardDanger {
-  border-color: color-mix(in srgb, var(--accent-warning) 30%, var(--border-card));
+  border-color: var(--text-strong);
+  border-width: 1px;
+  box-shadow: inset 3px 0 0 var(--text-strong);
 }
 
 .riskBadge {
@@ -198,13 +219,13 @@
 }
 
 .riskBadgeSafe {
-  background: color-mix(in srgb, var(--accent-positive) 14%, transparent);
-  color: var(--accent-positive);
+  background: var(--surface-muted);
+  color: var(--text-muted);
 }
 
 .riskBadgeDanger {
-  background: color-mix(in srgb, var(--accent-warning) 14%, transparent);
-  color: var(--accent-warning);
+  background: var(--text-strong);
+  color: var(--text-on-dark);
 }
 
 .riskTitle {
@@ -243,11 +264,11 @@
 }
 
 .riskCardSafe .riskList li::before {
-  background: var(--accent-positive);
+  background: var(--text-muted);
 }
 
 .riskCardDanger .riskList li::before {
-  background: var(--accent-warning);
+  background: var(--text-strong);
 }
 
 /* ─── Token ladder ────────────────────────────────────── */
@@ -307,18 +328,18 @@
 }
 
 .verdictRefuse {
-  background: color-mix(in srgb, var(--accent-warning) 14%, transparent);
-  color: var(--accent-warning);
+  background: var(--surface-muted);
+  color: var(--text-muted);
 }
 
 .verdictCautious {
   background: var(--surface-muted);
-  color: var(--accent-brand-strong);
+  color: var(--text-default);
 }
 
 .verdictPrefer {
-  background: color-mix(in srgb, var(--accent-positive) 14%, transparent);
-  color: var(--accent-positive);
+  background: var(--text-strong);
+  color: var(--text-on-dark);
 }
 
 /* ─── Skill structure ─────────────────────────────────── */
@@ -492,7 +513,7 @@
   font-size: var(--font-size-xs);
   text-transform: lowercase;
   letter-spacing: 0.04em;
-  color: var(--accent-brand-strong);
+  color: var(--text-muted);
 }
 
 .skillCardHeadline {
@@ -639,7 +660,7 @@
 }
 
 .callout {
-  background: linear-gradient(135deg, var(--surface-ink), #2a1f4f);
+  background: var(--surface-ink);
   color: var(--text-on-dark);
   border-radius: var(--radius-card);
   padding: var(--space-2xl);
@@ -647,6 +668,36 @@
   flex-direction: column;
   gap: var(--space-md);
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.closingMark {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  align-self: flex-end;
+  margin-top: var(--space-sm);
+  opacity: 0.92;
+  filter: invert(1);
+}
+
+.sectionDivider {
+  margin: 0;
+  display: block;
+  width: 100%;
+  max-width: var(--max-width-page);
+  padding: 0 var(--space-xl);
+  align-self: center;
+  opacity: 0.78;
+}
+
+.sectionDivider img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 5;
+  object-fit: cover;
 }
 
 .calloutLabel {

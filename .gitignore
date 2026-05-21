@@ -4,6 +4,10 @@ coverage
 .turbo
 site
 
+# visual-regression-guard baselines — local only
+screenshots/baseline/
+screenshots/diff/
+
 # Logs
 *.log
 npm-debug.log*
