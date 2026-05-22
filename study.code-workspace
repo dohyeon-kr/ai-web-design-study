@@ -1,0 +1,18 @@
+{
+  "folders": [
+    {
+      "name": "Root Directory",
+      "path": "."
+    },
+    {
+      "path": "apps/web"
+    },
+    {
+      "path": "apps/native"
+    }
+  ],
+  "settings": {
+    "npm.packageManager": "pnpm",
+    "js/ts.tsdk.path": "node_modules/typescript/lib"
+  }
+}
