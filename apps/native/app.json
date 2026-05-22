@@ -9,9 +9,10 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon",
-      "bundleIdentifier": "com.judohyeon.native"
+      "bundleIdentifier": "judohyeon.study"
     },
     "android": {
+      "package": "judohyeon.study",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
